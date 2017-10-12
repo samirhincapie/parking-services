@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.Salida;
 import co.com.ceiba.model.VigilanteException;
 import co.com.ceiba.service.ParqueoService;
 import co.com.ceiba.service.RegistroService;
@@ -31,6 +32,11 @@ public class Vigilante {
 		if(parqueos.size() == 20){
 			throw new VigilanteException(VigilanteException.NO_HAY_PARQUEO_DISPONIBLE_PARA_CARRO);
 		}
+	}
+
+	public Salida registrarSalida(Salida salida) throws Exception {
+		parqueoService.LiberarParqueo(salida.getCarro().getPlaca());
+		return registroService.agrega(salida);
 	}
 
 }

@@ -13,4 +13,8 @@ public class ParqueoService {
 		throw new Exception("TODO: listar parqueos");
 	}
 
+	public void LiberarParqueo(String placa) throws Exception {
+		throw new Exception("TODO: liberar parqueo");
+	}
+
 }
