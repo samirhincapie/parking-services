@@ -14,7 +14,7 @@ import co.com.ceiba.service.RegistroService;
 @Component
 public class Vigilante {
 	
-	private static Vigilante VIGILANTE;
+	private static Vigilante vigilante;
 	
 	private ParqueoService parqueoService;
 	private RegistroService registroService;
@@ -25,24 +25,16 @@ public class Vigilante {
 	}
 	
 	public static Vigilante getInstance(ParqueoService parqueoService, RegistroService registroService){
-		Vigilante.VIGILANTE = new Vigilante(parqueoService, registroService);
-		return Vigilante.VIGILANTE;
-	}
-
-	public boolean recibirCarro(String placa) throws Exception {
-		return true;
-	}
-
-	public boolean recibirMoto(String placa, String cilindraje) throws Exception {
-		return true;
+		Vigilante.vigilante = new Vigilante(parqueoService, registroService);
+		return Vigilante.vigilante;
 	}
 
 	public Ingreso registrarIngreso(Ingreso ingreso) throws Exception {
-		verificarDisponibilidad(ingreso.getCarro());
+		verificarDisponibilidad();
 		return registroService.agrega(ingreso);
 	}
 
-	private void verificarDisponibilidad(Carro carro) throws Exception {
+	private void verificarDisponibilidad() throws Exception {
 		List<Parqueo> parqueos = parqueoService.listarParqueos();
 		
 		if(parqueos.size() == 20){
