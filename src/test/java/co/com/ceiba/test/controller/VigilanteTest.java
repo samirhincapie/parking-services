@@ -33,6 +33,7 @@ public class VigilanteTest {
 		//Arrange
 		Ingreso mockIngreso = mock(Ingreso.class);
 		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
+		Vigilante vigilante = new Vigilante(parqueoService, registroService);
 		
 		when(parqueoService.listarParqueos())
 		.thenReturn(parqueos);
@@ -42,8 +43,7 @@ public class VigilanteTest {
 		
 		
 		//Act
-		Ingreso resultado = Vigilante.getInstance(parqueoService, registroService)
-				.registrarIngreso(mockIngreso);
+		Ingreso resultado = vigilante.registrarIngreso(mockIngreso);
 		
 				
 		//Assert
