@@ -14,6 +14,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'jacoco'
+apply plugin: 'war'
 
 group = 'co.com.ceiba'
 version = '0.0.1-SNAPSHOT'
@@ -32,15 +33,6 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('junit:junit:4.12')
     testCompile('org.mockito:mockito-all:1.10.19')
-}
-
-
-
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'parking-services',
-                   'Implementation-Version': version
-    }
 }
 
 test {
