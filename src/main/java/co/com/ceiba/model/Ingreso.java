@@ -5,11 +5,11 @@ import java.util.Calendar;
 public class Ingreso {
 	private int id;
 	private Calendar fecha;
-	private Carro carro;
+	private Vehiculo vehiculo;
 
 	public Ingreso(Calendar fecha, Carro carro) {
 		this.fecha = fecha;
-		this.carro = carro;
+		this.vehiculo = carro;
 	}
 	
 	public Ingreso(int id, Calendar fecha, Carro carro){
@@ -25,8 +25,12 @@ public class Ingreso {
 		this.id = id;
 	}
 
-	public Carro getCarro() {
-		return this.carro;
+	public Vehiculo getVehiculo() {
+		return this.vehiculo;
+	}
+
+	public Calendar getFecha() {
+		return this.fecha;
 	}
 	
 }
