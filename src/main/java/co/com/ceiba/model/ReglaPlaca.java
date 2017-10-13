@@ -1,13 +1,8 @@
 package co.com.ceiba.model;
 
-import java.security.KeyPair;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-
-import scala.annotation.varargs;
 
 
 public class ReglaPlaca implements IRegla {
@@ -23,14 +18,24 @@ public class ReglaPlaca implements IRegla {
 	
 	public boolean verificar(Ingreso ingreso) {
 		Map<String, Integer> reglasPlacaDiaAplicables = ObtenerReglasPlacaDiaAplicables(ingreso.getVehiculo().getPlaca());
-		return false;
+		
+		return verificarDiaValido(reglasPlacaDiaAplicables, ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
 	}
 
-	private Map<String, Integer> ObtenerReglasPlacaDiaAplicables(String placa) {
+	private boolean verificarDiaValido(Map<String, Integer> reglasPlacaDiaAplicables, int diaIngreso) {
+		if(reglasPlacaDiaAplicables.size() > 0){
+			
+			return reglasPlacaDiaAplicables.containsValue(diaIngreso);
+		}
+		
+		return true;
+	}
+
+	private Map<String, Integer> ObtenerReglasPlacaDiaAplicables(String placaIngreso) {
 		Map<String, Integer> reglasPlacaDiaAplicables = new HashMap<String, Integer>();
 		
 		reglasPlacaDia.forEach((placaRegla, diaRegla) -> {
-			if(isReglaAplicablePlaca(placaRegla, placa)){
+			if(isReglaAplicablePlaca(placaRegla, placaIngreso)){
 				reglasPlacaDiaAplicables.put(placaRegla, diaRegla);
 			}
 		});
@@ -38,23 +43,28 @@ public class ReglaPlaca implements IRegla {
 		return null;
 	}
 
-	private boolean isReglaAplicablePlaca(String placaRegla, String placa) {
+	private boolean isReglaAplicablePlaca(String placaRegla, String placaIngreso) {
 		
-		if(placa.length() == placaRegla.length()){
+		if(placaIngreso.length() == placaRegla.length()){
 			
-			for(char caracterPlaca: placaRegla.toCharArray()){
+			boolean isReglaPlacaAplicable = true; 
+			
+			for(char caracterPlacaRegla: placaRegla.toCharArray()){
 							
-				if(!isComodin(caracterPlaca) && !isMismoCaracterMismaPocision(placaRegla.indexOf(caracterPlaca), placaRegla, placa)){
-					return false
-				}
+				isReglaPlacaAplicable = isReglaPlacaAplicable 
+						&& (isComodin(caracterPlacaRegla)
+								|| (!isComodin(caracterPlacaRegla) && isMismoCaracterMismaPocision(placaRegla.indexOf(caracterPlacaRegla), placaRegla, placaIngreso))
+							);
 			}
+			
+			return isReglaPlacaAplicable;
 		}
 		
 		return false;
 	}
 
-	private boolean isMismoCaracterMismaPocision(int indice, String placaRegla, String placa) {
-		return placaRegla.charAt(indice) == placa.charAt(indice);
+	private boolean isMismoCaracterMismaPocision(int indiceCaracter, String placaRegla, String placaIngreso) {
+		return placaRegla.charAt(indiceCaracter) == placaIngreso.charAt(indiceCaracter);
 	}
 
 	private boolean isComodin(char caracterPlaca) {
