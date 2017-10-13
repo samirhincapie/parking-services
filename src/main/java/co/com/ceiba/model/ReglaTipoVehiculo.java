@@ -14,7 +14,7 @@ public class ReglaTipoVehiculo implements IRegla {
 		return this.tiposVehiculoPermitidos;
 	}
 	
-	public boolean verificar(Ingreso ingreso){
+	public boolean isValido(Ingreso ingreso){
 		return tiposVehiculoPermitidos.contains(ingreso.getVehiculo().getClass());
 	}
 }

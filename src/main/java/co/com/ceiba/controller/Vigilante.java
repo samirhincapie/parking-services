@@ -1,5 +1,6 @@
 package co.com.ceiba.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import co.com.ceiba.model.IRegla;
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.model.Moto;
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.ReglaPlaca;
 import co.com.ceiba.model.ReglaTipoVehiculo;
 import co.com.ceiba.model.Salida;
 import co.com.ceiba.model.Vehiculo;
@@ -19,8 +21,8 @@ import co.com.ceiba.service.RegistroService;
 
 @Component
 public class Vigilante {	
-	private static int LIMITE_PARQUEO_CARRO = 20;
-	private static int LIMITE_PARQUEO_MOTO = 10;
+	private int limiteParqueoCarro = 20;
+	private int limiteParqueoMoto = 10;
 	private ParqueoService parqueoService;
 	private RegistroService registroService;
 	private List<IRegla> reglas;
@@ -28,7 +30,15 @@ public class Vigilante {
 	public Vigilante(ParqueoService parqueoService, RegistroService registroService){
 		this.parqueoService = parqueoService;
 		this.registroService = registroService;
+		this.limiteParqueoMoto = 10;
+		this.limiteParqueoCarro = 20;
+		this.reglas = new ArrayList<IRegla>();
 		CargarReglas();
+	}
+	
+	public Vigilante(ParqueoService parqueoService, RegistroService registroService, List<IRegla> reglas){
+		this(parqueoService, registroService);
+		this.reglas = reglas;
 	}
 	
 	private void CargarReglas() {
@@ -37,7 +47,10 @@ public class Vigilante {
 	}
 
 	private void CargarReglasPlaca() {
-		
+		ReglaPlaca reglaPlaca = new ReglaPlaca();
+		reglaPlaca.getReglasPlacaDia().put("A_____", Calendar.MONDAY);
+		reglaPlaca.getReglasPlacaDia().put("A_____", Calendar.SUNDAY);
+		reglas.add(reglaPlaca);
 	}
 
 	private void CargarReglasTipoVehiculo() {
@@ -48,15 +61,26 @@ public class Vigilante {
 	}
 
 	public Ingreso registrarIngreso(Ingreso ingreso) throws VigilanteException {
-		verificarTipoVehiculo(ingreso.getVehiculo());
-		verificarReglaPlaca(ingreso.getVehiculo().getPlaca(), ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
+		verificarReglas(ingreso);
 		verificarDisponibilidad(ingreso.getVehiculo());
 		return registroService.agrega(ingreso);
 	}
 
+	private void verificarReglas(Ingreso ingreso) throws VigilanteException {
+		for(IRegla regla: reglas){	
+			if (!regla.isValido(ingreso)){
+				if(ReglaPlaca.class.isInstance(regla)){
+					throw new VigilanteException(VigilanteException.NO_PUEDE_INGRESAR_NO_ES_DIA_HABIL);
+				}
+				
+				if(ReglaTipoVehiculo.class.isInstance(regla)){
+					throw new VigilanteException(VigilanteException.TIPO_VEHICULO_NO_PERMITIDO);
+				}
+			}
+		}
+	}
+
 	private void verificarReglaPlaca(String placa, int diaIngreso) throws VigilanteException {
-		
-		
 		if(placa.toUpperCase().startsWith("A") 
 				&& (diaIngreso != Calendar.MONDAY && diaIngreso != Calendar.SUNDAY)){
 			throw new VigilanteException(VigilanteException.NO_PUEDE_INGRESAR_NO_ES_DIA_HABIL);			
@@ -93,7 +117,7 @@ public class Vigilante {
 	}
 
 	private int CalcularLimiteParqueo(Vehiculo vehiculo) {		
-		return isMoto(vehiculo) ? 10 : (isCarro(vehiculo) ? 20 : 0);
+		return isMoto(vehiculo) ? this.limiteParqueoMoto : (isCarro(vehiculo) ? this.limiteParqueoCarro : 0);
 	}
 
 	private boolean isCarro(Vehiculo vehiculo) {

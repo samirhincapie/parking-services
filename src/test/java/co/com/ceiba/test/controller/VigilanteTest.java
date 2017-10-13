@@ -19,9 +19,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import co.com.ceiba.controller.Vigilante;
 import co.com.ceiba.model.Carro;
+import co.com.ceiba.model.IRegla;
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.model.Moto;
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.ReglaPlaca;
+import co.com.ceiba.model.ReglaTipoVehiculo;
 import co.com.ceiba.model.Salida;
 import co.com.ceiba.model.Vehiculo;
 import co.com.ceiba.model.VigilanteException;
@@ -32,17 +35,25 @@ import co.com.ceiba.service.RegistroService;
 @RunWith(SpringRunner.class)
 public class VigilanteTest {
 
-	@MockBean
-	private ParqueoService parqueoService;
+	private ParqueoService mockParqueoService;
 
-	@MockBean
-	private RegistroService registroService;
+	private RegistroService mockRegistroService;
+
+	private List<IRegla> mockReglas;
+
+	private IRegla mockIRegla;
 
 	private Vigilante vigilante;
 
 	@Before
-	public void setup(){		
-		vigilante = new Vigilante(parqueoService, registroService);
+	public void setup(){
+		mockParqueoService = mock(ParqueoService.class);
+		mockRegistroService = mock(RegistroService.class);
+		mockReglas = new ArrayList<IRegla>();
+		mockIRegla = mock(IRegla.class);
+		mockReglas.add(mockIRegla);
+
+		vigilante = new Vigilante(mockParqueoService, mockRegistroService, mockReglas);
 	}
 
 	@Test
@@ -53,10 +64,10 @@ public class VigilanteTest {
 		Carro mockCarro = mock(Carro.class);
 		Calendar mockFecha = mock(Calendar.class);
 
-		when(parqueoService.listarParqueos())
+		when(mockParqueoService.listarParqueos())
 		.thenReturn(parqueos);
 
-		when(registroService.agrega(mockIngreso))
+		when(mockRegistroService.agrega(mockIngreso))
 		.thenReturn(mockIngreso);
 
 		when(mockIngreso.getVehiculo())
@@ -88,10 +99,10 @@ public class VigilanteTest {
 		Moto mockMoto = mock(Moto.class);
 		Calendar mockFecha = mock(Calendar.class);
 
-		when(parqueoService.listarParqueos())
+		when(mockParqueoService.listarParqueos())
 		.thenReturn(parqueos);
 
-		when(registroService.agrega(mockIngreso))
+		when(mockRegistroService.agrega(mockIngreso))
 		.thenReturn(mockIngreso);
 
 		when(mockIngreso.getVehiculo())
@@ -123,7 +134,7 @@ public class VigilanteTest {
 		Carro mockCarro = mock(Carro.class);
 		Calendar mockFecha = mock(Calendar.class);
 
-		when(parqueoService.listarParqueos())
+		when(mockParqueoService.listarParqueos())
 		.thenReturn(parqueos);
 
 		when(mockIngreso.getVehiculo())
@@ -163,8 +174,11 @@ public class VigilanteTest {
 		Moto mockMoto = mock(Moto.class);
 		Calendar mockFecha = mock(Calendar.class);
 
-		when(parqueoService.listarParqueos())
+		when(mockParqueoService.listarParqueos())
 		.thenReturn(parqueos);
+		
+		when(mockIRegla.isValido(any(Ingreso.class)))
+		.thenReturn(true);
 
 		when(mockIngreso.getVehiculo())
 		.thenReturn(mockMoto);
@@ -198,58 +212,46 @@ public class VigilanteTest {
 	@Test
 	public void TipoVehiculoNoPermitidoTest() {
 		//Arrange
-		Ingreso mockIngreso = mock(Ingreso.class);
-		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
-		Vehiculo mockVehiculo = mock(Vehiculo.class);
+		mockReglas = new ArrayList<IRegla>();
+		mockIRegla = mock(ReglaTipoVehiculo.class);
+		mockReglas.add(mockIRegla);
 
-		when(parqueoService.listarParqueos())
-		.thenReturn(parqueos);
+		vigilante = new Vigilante(mockParqueoService, mockRegistroService, mockReglas);
 
-		when(mockIngreso.getVehiculo())
-		.thenReturn(mockVehiculo);
-
-		when(registroService.agrega(mockIngreso))
-		.thenReturn(mockIngreso);
+		when(mockIRegla.isValido(any(Ingreso.class)))
+		.thenReturn(false);
 
 		boolean isTipoVehiculoNoPermitido = false;
 
 		//Act
-		try {
-			vigilante.registrarIngreso(mockIngreso);
-		} catch (VigilanteException e) {
+		try{
+			vigilante.registrarIngreso(any(Ingreso.class));
+		}
+		catch (VigilanteException e) {
 			isTipoVehiculoNoPermitido = VigilanteException.TIPO_VEHICULO_NO_PERMITIDO.equalsIgnoreCase(e.getMessage());
 		}
-
 
 		//Assert
 		assertTrue(isTipoVehiculoNoPermitido);
 	}
 
 	@Test
-	public void VigilanteRegistraIngresoPlcacaEmpiezaADiaLunesTest() throws VigilanteException{
+	public void VigilanteRegistraIngresoPlacaValidaTest() throws VigilanteException{
 		//Arrange
 		Ingreso mockIngreso = mock(Ingreso.class);
-		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
-		Carro mockCarro = mock(Carro.class);
-		Calendar mockFecha = mock(Calendar.class);
 
-		when(parqueoService.listarParqueos())
-		.thenReturn(parqueos);
+		List<Parqueo> mockParqueos = new ArrayList<Parqueo>();
+		Parqueo mockParqueo = mock(Parqueo.class);
+		mockParqueos.add(mockParqueo);
 
-		when(registroService.agrega(mockIngreso))
+		when(mockParqueoService.listarParqueos())
+		.thenReturn(mockParqueos);
+
+		when(mockRegistroService.agrega(mockIngreso))
 		.thenReturn(mockIngreso);
 
-		when(mockIngreso.getVehiculo())
-		.thenReturn(mockCarro);
-
-		when(mockCarro.getPlaca())
-		.thenReturn("AAA000");
-
-		when(mockIngreso.getFecha())
-		.thenReturn(mockFecha);
-
-		when(mockFecha.get(any(int.class)))
-		.thenReturn(Calendar.MONDAY);
+		when(mockIRegla.isValido(any(Ingreso.class)))
+		.thenReturn(true);
 
 
 		//Act
@@ -261,95 +263,28 @@ public class VigilanteTest {
 	}
 
 	@Test
-	public void VigilanteRegistraIngresoPlcacaEmpiezaADiaDomingoTest() throws VigilanteException{
+	public void PlacaEmpiezaANoPuedeIngresarNoEsDiaHabilTest(){
 		//Arrange
-		Ingreso mockIngreso = mock(Ingreso.class);
-		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
-		Carro mockCarro = mock(Carro.class);
-		Calendar mockFecha = mock(Calendar.class);
+		mockReglas = new ArrayList<IRegla>();
+		mockIRegla = mock(ReglaPlaca.class);
+		mockReglas.add(mockIRegla);
 
-		when(parqueoService.listarParqueos())
-		.thenReturn(parqueos);
+		vigilante = new Vigilante(mockParqueoService, mockRegistroService, mockReglas);
 
-		when(registroService.agrega(mockIngreso))
-		.thenReturn(mockIngreso);
+		when(mockIRegla.isValido(any(Ingreso.class)))
+		.thenReturn(false);
 
-		when(mockIngreso.getVehiculo())
-		.thenReturn(mockCarro);
-
-		when(mockCarro.getPlaca())
-		.thenReturn("AAA000");
-
-		when(mockIngreso.getFecha())
-		.thenReturn(mockFecha);
-
-		when(mockFecha.get(any(int.class)))
-		.thenReturn(Calendar.SUNDAY);
-
+		boolean isPlacaEmpiezaANoPuedeIngresarNoEsDiaHabil = false;
 
 		//Act
-		Ingreso resultado = vigilante.registrarIngreso(mockIngreso);
-
-
-		//Assert
-		assertEquals(mockIngreso, resultado);
-	}
-
-	@Test
-	public void PlcacaEmpiezaANoPuedeIngresarNoEsDiaHabilTest() throws VigilanteException{
-		//Arrange
-		Ingreso mockIngreso = mock(Ingreso.class);
-		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
-		Carro mockCarro = mock(Carro.class);
-		Calendar mockFecha = mock(Calendar.class);
-
-		when(parqueoService.listarParqueos())
-		.thenReturn(parqueos);
-
-		when(registroService.agrega(mockIngreso))
-		.thenReturn(mockIngreso);
-
-		when(mockIngreso.getVehiculo())
-		.thenReturn(mockCarro);
-
-		when(mockCarro.getPlaca())
-		.thenReturn("AAA000");
-
-		when(mockIngreso.getFecha())
-		.thenReturn(mockFecha);
-
-		when(mockFecha.get(any(int.class)))
-		.thenReturn(Calendar.SUNDAY);
-
-
-		//Act
-		Ingreso resultado = vigilante.registrarIngreso(mockIngreso);
-
+		try{
+			vigilante.registrarIngreso(any(Ingreso.class));
+		}
+		catch (VigilanteException e) {
+			isPlacaEmpiezaANoPuedeIngresarNoEsDiaHabil = VigilanteException.NO_PUEDE_INGRESAR_NO_ES_DIA_HABIL.equalsIgnoreCase(e.getMessage());
+		}
 
 		//Assert
-		assertEquals(mockIngreso, resultado);
-	}
-	
-	@Test
-	public void VigilanteRegistraSalidaCarroTest(){
-		//Arrange
-		Salida mockSalida = mock(Salida.class);
-		Carro mockCarro = mock(Carro.class);
-		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
-		Vigilante vigilante = new Vigilante(parqueoService, registroService);
-
-		when(registroService.agrega(any(Salida.class)))
-		.thenReturn(mockSalida);
-
-		when(mockSalida.getCarro())
-		.thenReturn(mockCarro);
-
-
-		//Act
-		Salida resultado = vigilante.registrarSalida(mockSalida);
-
-
-		//Assert
-		assertEquals(mockSalida, resultado);
+		assertTrue(isPlacaEmpiezaANoPuedeIngresarNoEsDiaHabil);
 	}
 }

@@ -16,7 +16,7 @@ public class ReglaPlaca implements IRegla {
 		return this.reglasPlacaDia;
 	}
 	
-	public boolean verificar(Ingreso ingreso) {
+	public boolean isValido(Ingreso ingreso) {
 		Map<String, Integer> reglasPlacaDiaAplicables = ObtenerReglasPlacaDiaAplicables(ingreso.getVehiculo().getPlaca());
 		
 		return verificarDiaValido(reglasPlacaDiaAplicables, ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
@@ -64,7 +64,7 @@ public class ReglaPlaca implements IRegla {
 	}
 
 	private boolean isMismoCaracterMismaPocision(int indiceCaracter, String placaRegla, String placaIngreso) {
-		return placaRegla.charAt(indiceCaracter) == placaIngreso.charAt(indiceCaracter);
+		return String.valueOf(placaRegla.charAt(indiceCaracter)).equalsIgnoreCase(String.valueOf(placaIngreso.charAt(indiceCaracter)));
 	}
 
 	private boolean isComodin(char caracterPlaca) {
