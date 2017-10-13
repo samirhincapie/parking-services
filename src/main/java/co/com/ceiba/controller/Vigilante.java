@@ -33,7 +33,7 @@ public class Vigilante {
 		this.limiteParqueoMoto = 10;
 		this.limiteParqueoCarro = 20;
 		this.reglas = new ArrayList<IRegla>();
-		CargarReglas();
+		cargarReglas();
 	}
 	
 	public Vigilante(ParqueoService parqueoService, RegistroService registroService, List<IRegla> reglas){
@@ -41,19 +41,19 @@ public class Vigilante {
 		this.reglas = reglas;
 	}
 	
-	private void CargarReglas() {
-		CargarReglasTipoVehiculo();
-		CargarReglasPlaca();
+	private void cargarReglas() {
+		cargarReglasTipoVehiculo();
+		cargarReglasPlaca();
 	}
 
-	private void CargarReglasPlaca() {
+	private void cargarReglasPlaca() {
 		ReglaPlaca reglaPlaca = new ReglaPlaca();
 		reglaPlaca.getReglasPlacaDia().put("A_____", Calendar.MONDAY);
 		reglaPlaca.getReglasPlacaDia().put("A_____", Calendar.SUNDAY);
 		reglas.add(reglaPlaca);
 	}
 
-	private void CargarReglasTipoVehiculo() {
+	private void cargarReglasTipoVehiculo() {
 		ReglaTipoVehiculo reglaTipoVehiculo = new ReglaTipoVehiculo();
 		reglaTipoVehiculo.getTiposVehiculosPermitidos().add(Moto.class);
 		reglaTipoVehiculo.getTiposVehiculosPermitidos().add(Carro.class);
@@ -77,19 +77,6 @@ public class Vigilante {
 					throw new VigilanteException(VigilanteException.TIPO_VEHICULO_NO_PERMITIDO);
 				}
 			}
-		}
-	}
-
-	private void verificarReglaPlaca(String placa, int diaIngreso) throws VigilanteException {
-		if(placa.toUpperCase().startsWith("A") 
-				&& (diaIngreso != Calendar.MONDAY && diaIngreso != Calendar.SUNDAY)){
-			throw new VigilanteException(VigilanteException.NO_PUEDE_INGRESAR_NO_ES_DIA_HABIL);			
-		}
-	}
-
-	private void verificarTipoVehiculo(Vehiculo vehiculo) throws VigilanteException {
-		if(!isMoto(vehiculo) && !isCarro(vehiculo)){
-			throw new VigilanteException(VigilanteException.TIPO_VEHICULO_NO_PERMITIDO);
 		}
 	}
 
