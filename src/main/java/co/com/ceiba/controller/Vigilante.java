@@ -1,5 +1,6 @@
 package co.com.ceiba.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Vigilante {
 		this.registroService = registroService;
 		this.limiteParqueoMoto = 10;
 		this.limiteParqueoCarro = 20;
-		this.reglas = new ArrayList<IRegla>();
+		this.reglas = new ArrayList<>();
 		cargarReglas();
 	}
 	
@@ -115,9 +116,15 @@ public class Vigilante {
 		return Moto.class.isInstance(vehiculo);
 	}
 
-	public Salida registrarSalida(Salida salida) throws Exception {
+	public Salida registrarSalida(Salida salida) {
 		parqueoService.LiberarParqueo(salida.getCarro().getPlaca());
 		return registroService.agrega(salida);
+	}
+
+	public BigDecimal indicarValorPorPagar(Carro carro, Calendar fechaSalida) {
+		List<Parqueo> parqueos = parqueoService.listarParqueos();
+		
+		return null;
 	}
 
 }

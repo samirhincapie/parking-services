@@ -15,8 +15,12 @@ public class RegistroService {
 		return new Ingreso(Calendar.getInstance(), new Carro(""));
 	}
 
-	public Salida agrega(Salida nuevaSalida) throws Exception {
-		throw new Exception("TODO: agregar salida");
+	public Salida agrega(Salida nuevaSalida) {
+		return new Salida();
+	}
+
+	public Ingreso consultarIngreso(Carro carro) {
+		return new Ingreso(Calendar.getInstance(), new Carro(""));
 	}
 
 }

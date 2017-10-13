@@ -6,7 +6,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Before;
@@ -25,6 +27,7 @@ import co.com.ceiba.model.ReglaTipoVehiculo;
 import co.com.ceiba.model.VigilanteException;
 import co.com.ceiba.service.ParqueoService;
 import co.com.ceiba.service.RegistroService;
+import co.com.ceiba.testdatabuilder.CalendarTestDataBuilder;
 
 
 @RunWith(SpringRunner.class)
@@ -238,5 +241,47 @@ public class VigilanteTest {
 
 		//Assert
 		assertTrue(isPlacaEmpiezaANoPuedeIngresarNoEsDiaHabil);
+	}
+	
+	@Test
+	public void Test1(){
+		//Arrange
+		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
+		
+		Calendar mockFechaSalida = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(4).withMinute(30).Build();
+		
+		Ingreso mockIngreso = mock(Ingreso.class);
+		
+		Carro mockCarro = mock(Carro.class);
+		
+		Parqueo mockParqueo = mock(Parqueo.class);
+		
+		List<Parqueo> mockParqueos = new ArrayList<>();
+		mockParqueos.add(mockParqueo);
+		
+		when(mockParqueoService.listarParqueos())
+		.thenReturn(mockParqueos);
+		
+		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		.thenReturn(mockIngreso);
+		
+		when(mockIngreso.getFecha())
+		.thenReturn(mockFechaIngreso);
+		
+		when(mockParqueo.getVehiculo())
+		.thenReturn(mockCarro);
+				
+		BigDecimal valorPorPagar = new BigDecimal("0");
+		BigDecimal valorPorPagarEsperado = new BigDecimal("5000");
+		
+		
+		//Act
+		valorPorPagar = vigilante.indicarValorPorPagar(mockCarro, mockFechaSalida);
+		
+		
+		//Assert
+		assertEquals(valorPorPagarEsperado, valorPorPagar);
 	}
 }

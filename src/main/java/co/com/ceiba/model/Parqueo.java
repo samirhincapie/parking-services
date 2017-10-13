@@ -1,13 +1,13 @@
 package co.com.ceiba.model;
 
 public class Parqueo {
-	private Carro carro;
+	private Vehiculo vehiculo;
 	
-	public Parqueo(Carro carro) {
-		this.carro = carro;
+	public Parqueo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
 	}
 
-	public Carro getCarro() {
-		return this.carro;
+	public Vehiculo getVehiculo() {
+		return this.vehiculo;
 	}
 }

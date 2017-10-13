@@ -14,8 +14,8 @@ public class ParqueoService {
 		return new ArrayList<Parqueo>();
 	}
 
-	public void LiberarParqueo(String placa) throws Exception {
-		throw new Exception("TODO: liberar parqueo");
+	public void LiberarParqueo(String placa) {
+		
 	}
 
 }
