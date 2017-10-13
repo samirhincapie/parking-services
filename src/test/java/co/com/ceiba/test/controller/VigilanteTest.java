@@ -7,14 +7,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.com.ceiba.controller.Vigilante;
@@ -25,8 +22,6 @@ import co.com.ceiba.model.Moto;
 import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.model.ReglaPlaca;
 import co.com.ceiba.model.ReglaTipoVehiculo;
-import co.com.ceiba.model.Salida;
-import co.com.ceiba.model.Vehiculo;
 import co.com.ceiba.model.VigilanteException;
 import co.com.ceiba.service.ParqueoService;
 import co.com.ceiba.service.RegistroService;
