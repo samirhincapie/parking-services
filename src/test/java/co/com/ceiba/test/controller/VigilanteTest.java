@@ -62,7 +62,6 @@ public class VigilanteTest {
 		Ingreso mockIngreso = mock(Ingreso.class);
 		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
 		Carro mockCarro = mock(Carro.class);
-		Calendar mockFecha = mock(Calendar.class);
 
 		when(mockParqueoService.listarParqueos())
 		.thenReturn(parqueos);
@@ -72,15 +71,6 @@ public class VigilanteTest {
 
 		when(mockIngreso.getVehiculo())
 		.thenReturn(mockCarro);
-
-		when(mockCarro.getPlaca())
-		.thenReturn("BAA000");
-
-		when(mockIngreso.getFecha())
-		.thenReturn(mockFecha);
-
-		when(mockFecha.get(any(int.class)))
-		.thenReturn(Calendar.MONDAY);
 
 
 		//Act
@@ -97,7 +87,6 @@ public class VigilanteTest {
 		Ingreso mockIngreso = mock(Ingreso.class);
 		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
 		Moto mockMoto = mock(Moto.class);
-		Calendar mockFecha = mock(Calendar.class);
 
 		when(mockParqueoService.listarParqueos())
 		.thenReturn(parqueos);
@@ -107,15 +96,6 @@ public class VigilanteTest {
 
 		when(mockIngreso.getVehiculo())
 		.thenReturn(mockMoto);
-
-		when(mockMoto.getPlaca())
-		.thenReturn("AAA00A");
-
-		when(mockIngreso.getFecha())
-		.thenReturn(mockFecha);
-
-		when(mockFecha.get(any(int.class)))
-		.thenReturn(Calendar.MONDAY);
 
 
 		//Act
@@ -132,22 +112,12 @@ public class VigilanteTest {
 		Ingreso mockIngreso = mock(Ingreso.class);
 		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
 		Carro mockCarro = mock(Carro.class);
-		Calendar mockFecha = mock(Calendar.class);
 
 		when(mockParqueoService.listarParqueos())
 		.thenReturn(parqueos);
 
 		when(mockIngreso.getVehiculo())
 		.thenReturn(mockCarro);
-
-		when(mockCarro.getPlaca())
-		.thenReturn("AAA000");
-
-		when(mockIngreso.getFecha())
-		.thenReturn(mockFecha);
-
-		when(mockFecha.get(any(int.class)))
-		.thenReturn(Calendar.MONDAY);
 
 		when(parqueos.size())
 		.thenReturn(20);
@@ -170,29 +140,16 @@ public class VigilanteTest {
 	public void NoHayPuestoDisponibleParaMotoTest() {
 		//Arrange
 		Ingreso mockIngreso = mock(Ingreso.class);
-		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
+		List<Parqueo> mockParqueos = mock((new ArrayList<Parqueo>()).getClass());
 		Moto mockMoto = mock(Moto.class);
-		Calendar mockFecha = mock(Calendar.class);
 
 		when(mockParqueoService.listarParqueos())
-		.thenReturn(parqueos);
-		
-		when(mockIRegla.isValido(any(Ingreso.class)))
-		.thenReturn(true);
+		.thenReturn(mockParqueos);
 
 		when(mockIngreso.getVehiculo())
 		.thenReturn(mockMoto);
 
-		when(mockMoto.getPlaca())
-		.thenReturn("AAA00A");
-
-		when(mockIngreso.getFecha())
-		.thenReturn(mockFecha);
-
-		when(mockFecha.get(any(int.class)))
-		.thenReturn(Calendar.MONDAY);
-
-		when(parqueos.size())
+		when(mockParqueos.size())
 		.thenReturn(10);
 
 		boolean isNoHayPuestoDisponibleParaMoto = false;
@@ -239,10 +196,7 @@ public class VigilanteTest {
 	public void VigilanteRegistraIngresoPlacaValidaTest() throws VigilanteException{
 		//Arrange
 		Ingreso mockIngreso = mock(Ingreso.class);
-
-		List<Parqueo> mockParqueos = new ArrayList<Parqueo>();
-		Parqueo mockParqueo = mock(Parqueo.class);
-		mockParqueos.add(mockParqueo);
+		List<Parqueo> mockParqueos = mock((new ArrayList<Parqueo>()).getClass());
 
 		when(mockParqueoService.listarParqueos())
 		.thenReturn(mockParqueos);
@@ -252,6 +206,9 @@ public class VigilanteTest {
 
 		when(mockIRegla.isValido(any(Ingreso.class)))
 		.thenReturn(true);
+
+		when(mockIngreso.getVehiculo())
+		.thenReturn(mock(Carro.class));
 
 
 		//Act
