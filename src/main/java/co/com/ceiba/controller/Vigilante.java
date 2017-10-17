@@ -121,7 +121,7 @@ public class Vigilante {
 	}
 
 	public double indicarValorPorPagar(Vehiculo vehiculo, Calendar fechaSalida) throws VigilanteException {
-		Parqueo parqueo = consultarParqueo(vehiculo);
+		Parqueo parqueo = parqueoService.consultarParqueo(vehiculo.getPlaca());
 		Ingreso ingreso = registroService.consultarIngreso(vehiculo);
 		
 		int horasParqueo = calcularHorasParqueo(ingreso.getFecha(), fechaSalida);
@@ -153,18 +153,6 @@ public class Vigilante {
 		boolean isFraccion = (horasTranscurridas - ((int) horasTranscurridas)) > 0;
 		
 		return (int)horasTranscurridas + (isFraccion ? 1 : 0);
-	}
-
-	private Parqueo consultarParqueo(Vehiculo vehiculo) throws VigilanteException {
-		List<Parqueo> parqueos = parqueoService.listarParqueos();
-
-		for(Parqueo parqueo: parqueos){
-			if(parqueo.getVehiculo().getPlaca().equalsIgnoreCase(vehiculo.getPlaca())){
-				return parqueo;
-			}
-		}
-
-		throw new VigilanteException(VigilanteException.VEHICULO_NO_ESTA_EN_EL_PARQUEADERO);
 	}
 
 }

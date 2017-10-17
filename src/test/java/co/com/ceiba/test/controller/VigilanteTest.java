@@ -3,6 +3,7 @@ package co.com.ceiba.test.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +22,8 @@ import co.com.ceiba.model.IRegla;
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.model.Moto;
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.ParqueoCarro;
+import co.com.ceiba.model.ParqueoMoto;
 import co.com.ceiba.model.ReglaPlaca;
 import co.com.ceiba.model.ReglaTipoVehiculo;
 import co.com.ceiba.model.Salida;
@@ -256,13 +259,13 @@ public class VigilanteTest {
 		
 		Carro mockCarro = mock(Carro.class);
 		
-		Parqueo mockParqueo = mock(Parqueo.class);
+		Parqueo mockParqueo = mock(ParqueoCarro.class);
 		
 		List<Parqueo> mockParqueos = new ArrayList<>();
 		mockParqueos.add(mockParqueo);
 		
-		when(mockParqueoService.listarParqueos())
-		.thenReturn(mockParqueos);
+		when(mockParqueoService.consultarParqueo(anyString()))
+		.thenReturn(mockParqueo);
 		
 		when(mockRegistroService.consultarIngreso(any(Carro.class)))
 		.thenReturn(mockIngreso);
@@ -312,8 +315,8 @@ public class VigilanteTest {
 		List<Parqueo> mockParqueos = new ArrayList<>();
 		mockParqueos.add(mockParqueo);
 		
-		when(mockParqueoService.listarParqueos())
-		.thenReturn(mockParqueos);
+		when(mockParqueoService.consultarParqueo(anyString()))
+		.thenReturn(mockParqueo);
 		
 		when(mockRegistroService.consultarIngreso(any(Carro.class)))
 		.thenReturn(mockIngreso);
@@ -363,8 +366,8 @@ public class VigilanteTest {
 		List<Parqueo> mockParqueos = new ArrayList<>();
 		mockParqueos.add(mockParqueo);
 		
-		when(mockParqueoService.listarParqueos())
-		.thenReturn(mockParqueos);
+		when(mockParqueoService.consultarParqueo(anyString()))
+		.thenReturn(mockParqueo);
 		
 		when(mockRegistroService.consultarIngreso(any(Carro.class)))
 		.thenReturn(mockIngreso);
@@ -409,13 +412,13 @@ public class VigilanteTest {
 		
 		Moto mockMoto = mock(Moto.class);
 		
-		Parqueo mockParqueo = mock(Parqueo.class);
+		Parqueo mockParqueo = mock(ParqueoMoto.class);
 		
 		List<Parqueo> mockParqueos = new ArrayList<>();
 		mockParqueos.add(mockParqueo);
 		
-		when(mockParqueoService.listarParqueos())
-		.thenReturn(mockParqueos);
+		when(mockParqueoService.consultarParqueo(anyString()))
+		.thenReturn(mockParqueo);
 		
 		when(mockRegistroService.consultarIngreso(any(Carro.class)))
 		.thenReturn(mockIngreso);
@@ -463,13 +466,13 @@ public class VigilanteTest {
 		
 		Moto mockMoto = mock(Moto.class);
 		
-		Parqueo mockParqueo = mock(Parqueo.class);
+		Parqueo mockParqueo = mock(ParqueoMoto.class);
 		
 		List<Parqueo> mockParqueos = new ArrayList<>();
 		mockParqueos.add(mockParqueo);
 		
-		when(mockParqueoService.listarParqueos())
-		.thenReturn(mockParqueos);
+		when(mockParqueoService.consultarParqueo(anyString()))
+		.thenReturn(mockParqueo);
 		
 		when(mockRegistroService.consultarIngreso(any(Carro.class)))
 		.thenReturn(mockIngreso);

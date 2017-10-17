@@ -9,6 +9,6 @@ public interface RepositorioParqueoJPA {
 	 * @param isbn
 	 * @return
 	 */
-	LibroEntity obtenerLibroEntityPorIsbn(String isbn);
+	ParqueoEntity obtenerParqueoEntityPorPlaca(String isbn);
 
 }

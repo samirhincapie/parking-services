@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import co.com.ceiba.model.Carro;
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.ParqueoCarro;
 
 @Component
 public class ParqueoService {
@@ -16,6 +18,10 @@ public class ParqueoService {
 
 	public void LiberarParqueo(String placa) {
 		
+	}
+
+	public Parqueo consultarParqueo(String placa) {
+		return new ParqueoCarro(new Carro(""), 0, 0);
 	}
 
 }
