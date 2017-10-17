@@ -4,7 +4,7 @@ public class Moto extends Vehiculo {
 	
 	private int cilindraje;
 
-	protected Moto(String placa, int cilindraje) {
+	public Moto(String placa, int cilindraje) {
 		super(placa);
 		this.cilindraje = cilindraje;
 	}

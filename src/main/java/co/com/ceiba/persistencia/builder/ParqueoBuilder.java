@@ -2,28 +2,25 @@ package co.com.ceiba.persistencia.builder;
 
 import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.persistencia.entidad.ParqueoEntity;
-import dominio.Libro;
-import persistencia.entitad.LibroEntity;
 
 public class ParqueoBuilder {
 	
 	private ParqueoBuilder() {}
 	
-	public static Parqueo convertirADominio(ParqueoEntity parqueoEntity) {
-		Parqueo parqueo = null;
-		
-		if(parqueoEntity != null) {
-			parqueo = new Parqueo();
+	public static Parqueo convertirADominio(ParqueoEntity libroEntity) {
+		Parqueo libro = null;
+		if(libroEntity != null) {
+			libro = new Parqueo(libroEntity.getIsbn(), libroEntity.getTitulo(), libroEntity.getAnio());
 		}
-		
-		return parqueo;
+		return libro;
 	}
 	
 	public static ParqueoEntity convertirAEntity(Parqueo parqueo) {
 		ParqueoEntity parqueoEntity = new ParqueoEntity();
-		parqueoEntity.setVehiculo(parqueo.getTitulo());
-		parqueoEntity.setIsbn(parqueo.getIsbn());
-		parqueoEntity.setAnio(parqueo.getAnio());
+		parqueoEntity.setVehiculo(parqueo.getVehiculo());
+		parqueoEntity.setValorAdicional(parqueo.getValorAdicional());
+		parqueoEntity.setValorDia(parqueo.getValorDia());
+		parqueoEntity.setValorHora(parqueo.getValorHora());
 		return parqueoEntity;
 	}
 }
