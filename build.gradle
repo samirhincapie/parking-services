@@ -29,7 +29,11 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.hibernate:hibernate-core:5.2.9.Final')	
+	compile('com.h2database:h2')
+	compile('log4j:log4j:1.2.17')
 	runtime('com.h2database:h2')
+	runtime('org.hibernate:hibernate-core:5.2.9.Final')	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('junit:junit:4.12')
     testCompile('org.mockito:mockito-all:1.10.19')
