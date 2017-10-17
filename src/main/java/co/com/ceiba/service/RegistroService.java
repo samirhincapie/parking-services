@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import co.com.ceiba.model.Carro;
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.model.Salida;
+import co.com.ceiba.model.Vehiculo;
 
 @Component
 public class RegistroService {
@@ -16,10 +17,10 @@ public class RegistroService {
 	}
 
 	public Salida agrega(Salida nuevaSalida) {
-		return new Salida();
+		return new Salida(new Carro(""), Calendar.getInstance());
 	}
 
-	public Ingreso consultarIngreso(Carro carro) {
+	public Ingreso consultarIngreso(Vehiculo vehiculo) {
 		return new Ingreso(Calendar.getInstance(), new Carro(""));
 	}
 

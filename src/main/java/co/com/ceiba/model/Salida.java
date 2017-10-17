@@ -1,10 +1,21 @@
 package co.com.ceiba.model;
 
+import java.util.Calendar;
+
 public class Salida {
-	private int id;
-	private Carro carro;
+	private Vehiculo vehiculo;
+	private Calendar fecha;
 	
-	public Carro getCarro() {
-		return this.carro;
+	public Salida(Vehiculo vehiculo, Calendar fecha){
+		this.vehiculo = vehiculo;
+		this.fecha = fecha;
+	}
+	
+	public Vehiculo getVehiculo() {
+		return this.vehiculo;
+	}
+	
+	public Calendar getFechaSalida(){
+		return this.fecha;
 	}
 }

@@ -6,7 +6,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -24,6 +23,7 @@ import co.com.ceiba.model.Moto;
 import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.model.ReglaPlaca;
 import co.com.ceiba.model.ReglaTipoVehiculo;
+import co.com.ceiba.model.Salida;
 import co.com.ceiba.model.VigilanteException;
 import co.com.ceiba.service.ParqueoService;
 import co.com.ceiba.service.RegistroService;
@@ -244,7 +244,7 @@ public class VigilanteTest {
 	}
 	
 	@Test
-	public void Test1(){
+	public void VigilanteIndicaValorPorPagarPorHoraFraccionCarroTest() throws VigilanteException{
 		//Arrange
 		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
 				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
@@ -272,9 +272,18 @@ public class VigilanteTest {
 		
 		when(mockParqueo.getVehiculo())
 		.thenReturn(mockCarro);
+		
+		when(mockParqueo.getValorDia())
+		.thenReturn(8000d);
+		
+		when(mockParqueo.getValorHora())
+		.thenReturn(1000d);
+		
+		when(mockCarro.getPlaca())
+		.thenReturn("AAA000");
 				
-		BigDecimal valorPorPagar = new BigDecimal("0");
-		BigDecimal valorPorPagarEsperado = new BigDecimal("5000");
+		double valorPorPagar = 0;
+		double valorPorPagarEsperado = 5000;
 		
 		
 		//Act
@@ -282,6 +291,269 @@ public class VigilanteTest {
 		
 		
 		//Assert
-		assertEquals(valorPorPagarEsperado, valorPorPagar);
+		assertEquals(valorPorPagarEsperado, valorPorPagar, 0.0);
+	}
+	
+	@Test
+	public void VigilanteIndicaValorPorPagarPorHoraCarroTest() throws VigilanteException{
+		//Arrange
+		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
+		
+		Calendar mockFechaSalida = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(4).withMinute(0).Build();
+		
+		Ingreso mockIngreso = mock(Ingreso.class);
+		
+		Carro mockCarro = mock(Carro.class);
+		
+		Parqueo mockParqueo = mock(Parqueo.class);
+		
+		List<Parqueo> mockParqueos = new ArrayList<>();
+		mockParqueos.add(mockParqueo);
+		
+		when(mockParqueoService.listarParqueos())
+		.thenReturn(mockParqueos);
+		
+		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		.thenReturn(mockIngreso);
+		
+		when(mockIngreso.getFecha())
+		.thenReturn(mockFechaIngreso);
+		
+		when(mockParqueo.getVehiculo())
+		.thenReturn(mockCarro);
+		
+		when(mockParqueo.getValorDia())
+		.thenReturn(8000d);
+		
+		when(mockParqueo.getValorHora())
+		.thenReturn(1000d);
+		
+		when(mockCarro.getPlaca())
+		.thenReturn("AAA000");
+				
+		double valorPorPagar = 0;
+		double valorPorPagarEsperado = 4000;
+		
+		
+		//Act
+		valorPorPagar = vigilante.indicarValorPorPagar(mockCarro, mockFechaSalida);
+		
+		
+		//Assert
+		assertEquals(valorPorPagarEsperado, valorPorPagar, 0.0);
+	}
+	
+	@Test
+	public void VigilanteIndicaValorPorPagarPorDiaCarroTest() throws VigilanteException{
+		//Arrange
+		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
+		
+		Calendar mockFechaSalida = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(2).withHour(3).withMinute(0).Build();
+		
+		Ingreso mockIngreso = mock(Ingreso.class);
+		
+		Carro mockCarro = mock(Carro.class);
+		
+		Parqueo mockParqueo = mock(Parqueo.class);
+		
+		List<Parqueo> mockParqueos = new ArrayList<>();
+		mockParqueos.add(mockParqueo);
+		
+		when(mockParqueoService.listarParqueos())
+		.thenReturn(mockParqueos);
+		
+		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		.thenReturn(mockIngreso);
+		
+		when(mockIngreso.getFecha())
+		.thenReturn(mockFechaIngreso);
+		
+		when(mockParqueo.getVehiculo())
+		.thenReturn(mockCarro);
+		
+		when(mockParqueo.getValorDia())
+		.thenReturn(8000d);
+		
+		when(mockParqueo.getValorHora())
+		.thenReturn(1000d);
+		
+		when(mockCarro.getPlaca())
+		.thenReturn("AAA000");
+				
+		double valorPorPagar = 0;
+		double valorPorPagarEsperado = 11000;
+		
+		
+		//Act
+		valorPorPagar = vigilante.indicarValorPorPagar(mockCarro, mockFechaSalida);
+		
+		
+		//Assert
+		assertEquals(valorPorPagarEsperado, valorPorPagar, 0.0);
+	}
+	
+	@Test
+	public void VigilanteIndicaValorPorPagarPorHoraMotoCilindrajeMenorTest() throws VigilanteException{
+		//Arrange
+		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
+		
+		Calendar mockFechaSalida = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(4).withMinute(0).Build();
+		
+		Ingreso mockIngreso = mock(Ingreso.class);
+		
+		Moto mockMoto = mock(Moto.class);
+		
+		Parqueo mockParqueo = mock(Parqueo.class);
+		
+		List<Parqueo> mockParqueos = new ArrayList<>();
+		mockParqueos.add(mockParqueo);
+		
+		when(mockParqueoService.listarParqueos())
+		.thenReturn(mockParqueos);
+		
+		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		.thenReturn(mockIngreso);
+		
+		when(mockIngreso.getFecha())
+		.thenReturn(mockFechaIngreso);
+		
+		when(mockParqueo.getVehiculo())
+		.thenReturn(mockMoto);
+		
+		when(mockParqueo.getValorDia())
+		.thenReturn(600d);
+		
+		when(mockParqueo.getValorHora())
+		.thenReturn(500d);
+		
+		when(mockMoto.getPlaca())
+		.thenReturn("AAA00A");
+		
+		when(mockMoto.getCilindraje())
+		.thenReturn(125);
+				
+		double valorPorPagar = 0;
+		double valorPorPagarEsperado = 2000;
+		
+		
+		//Act
+		valorPorPagar = vigilante.indicarValorPorPagar(mockMoto, mockFechaSalida);
+		
+		
+		//Assert
+		assertEquals(valorPorPagarEsperado, valorPorPagar, 0.0);
+	}
+	
+	@Test
+	public void VigilanteIndicaValorPorPagarPorHoraMotoCilindrajeMayorTest() throws VigilanteException{
+		//Arrange
+		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
+		
+		Calendar mockFechaSalida = new CalendarTestDataBuilder().withYear(2017)
+				.withMonth(0).withDay(1).withHour(4).withMinute(0).Build();
+		
+		Ingreso mockIngreso = mock(Ingreso.class);
+		
+		Moto mockMoto = mock(Moto.class);
+		
+		Parqueo mockParqueo = mock(Parqueo.class);
+		
+		List<Parqueo> mockParqueos = new ArrayList<>();
+		mockParqueos.add(mockParqueo);
+		
+		when(mockParqueoService.listarParqueos())
+		.thenReturn(mockParqueos);
+		
+		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		.thenReturn(mockIngreso);
+		
+		when(mockIngreso.getFecha())
+		.thenReturn(mockFechaIngreso);
+		
+		when(mockParqueo.getVehiculo())
+		.thenReturn(mockMoto);
+		
+		when(mockParqueo.getValorDia())
+		.thenReturn(600d);
+		
+		when(mockParqueo.getValorHora())
+		.thenReturn(500d);
+		
+		when(mockParqueo.getValorAdicional())
+		.thenReturn(2000d);
+		
+		when(mockMoto.getPlaca())
+		.thenReturn("AAA00A");
+		
+		when(mockMoto.getCilindraje())
+		.thenReturn(550);
+				
+		double valorPorPagar = 0;
+		double valorPorPagarEsperado = 4000;
+		
+		
+		//Act
+		valorPorPagar = vigilante.indicarValorPorPagar(mockMoto, mockFechaSalida);
+		
+		
+		//Assert
+		assertEquals(valorPorPagarEsperado, valorPorPagar, 0.0);
+	}
+	
+	@Test
+	public void VigilanteRegistrSalidaMotoTest() throws VigilanteException{
+		//Arrange
+		Salida mockSalida = mock(Salida.class);
+		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
+		Moto mockMoto = mock(Moto.class);
+
+		when(mockParqueoService.listarParqueos())
+		.thenReturn(parqueos);
+
+		when(mockRegistroService.agrega(mockSalida))
+		.thenReturn(mockSalida);
+
+		when(mockSalida.getVehiculo())
+		.thenReturn(mockMoto);
+
+
+		//Act
+		Salida resultado = vigilante.registrarSalida(mockSalida);
+
+
+		//Assert
+		assertEquals(mockSalida, resultado);
+	}
+	
+	@Test
+	public void VigilanteRegistrSalidaCarroTest() throws VigilanteException{
+		//Arrange
+		Salida mockSalida = mock(Salida.class);
+		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
+		Carro mockCarro = mock(Carro.class);
+
+		when(mockParqueoService.listarParqueos())
+		.thenReturn(parqueos);
+
+		when(mockRegistroService.agrega(mockSalida))
+		.thenReturn(mockSalida);
+
+		when(mockSalida.getVehiculo())
+		.thenReturn(mockCarro);
+
+
+		//Act
+		Salida resultado = vigilante.registrarSalida(mockSalida);
+
+
+		//Assert
+		assertEquals(mockSalida, resultado);
 	}
 }

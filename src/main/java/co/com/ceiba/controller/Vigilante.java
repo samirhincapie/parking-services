@@ -1,6 +1,5 @@
 package co.com.ceiba.controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,7 +26,7 @@ public class Vigilante {
 	private ParqueoService parqueoService;
 	private RegistroService registroService;
 	private List<IRegla> reglas;
-	
+
 	public Vigilante(ParqueoService parqueoService, RegistroService registroService){
 		this.parqueoService = parqueoService;
 		this.registroService = registroService;
@@ -36,12 +35,12 @@ public class Vigilante {
 		this.reglas = new ArrayList<>();
 		cargarReglas();
 	}
-	
+
 	public Vigilante(ParqueoService parqueoService, RegistroService registroService, List<IRegla> reglas){
 		this(parqueoService, registroService);
 		this.reglas = reglas;
 	}
-	
+
 	private void cargarReglas() {
 		cargarReglasTipoVehiculo();
 		cargarReglasPlaca();
@@ -73,7 +72,7 @@ public class Vigilante {
 				if(ReglaPlaca.class.isInstance(regla)){
 					throw new VigilanteException(VigilanteException.NO_PUEDE_INGRESAR_NO_ES_DIA_HABIL);
 				}
-				
+
 				if(ReglaTipoVehiculo.class.isInstance(regla)){
 					throw new VigilanteException(VigilanteException.TIPO_VEHICULO_NO_PERMITIDO);
 				}
@@ -83,9 +82,9 @@ public class Vigilante {
 
 	private void verificarDisponibilidad(Vehiculo vehiculo) throws VigilanteException {
 		List<Parqueo> parqueos = parqueoService.listarParqueos();
-		
-		int limite = CalcularLimiteParqueo(vehiculo);
-		
+
+		int limite = calcularLimiteParqueo(vehiculo);
+
 		if(parqueos.size() == limite){
 			indicarNoHayParqueo(vehiculo);
 		}		
@@ -93,18 +92,18 @@ public class Vigilante {
 
 	private void indicarNoHayParqueo(Vehiculo vehiculo) throws VigilanteException {
 		String mensaje = "";
-		
+
 		if(isMoto(vehiculo)){
 			mensaje = VigilanteException.NO_HAY_PARQUEO_DISPONIBLE_PARA_MOTO;
 		}
 		if(isCarro(vehiculo)){
 			mensaje = VigilanteException.NO_HAY_PARQUEO_DISPONIBLE_PARA_CARRO;
 		}
-		
+
 		throw new VigilanteException(mensaje);
 	}
 
-	private int CalcularLimiteParqueo(Vehiculo vehiculo) {		
+	private int calcularLimiteParqueo(Vehiculo vehiculo) {		
 		return isMoto(vehiculo) ? this.limiteParqueoMoto : (isCarro(vehiculo) ? this.limiteParqueoCarro : 0);
 	}
 
@@ -117,14 +116,55 @@ public class Vigilante {
 	}
 
 	public Salida registrarSalida(Salida salida) {
-		parqueoService.LiberarParqueo(salida.getCarro().getPlaca());
+		parqueoService.LiberarParqueo(salida.getVehiculo().getPlaca());
 		return registroService.agrega(salida);
 	}
 
-	public BigDecimal indicarValorPorPagar(Carro carro, Calendar fechaSalida) {
-		List<Parqueo> parqueos = parqueoService.listarParqueos();
+	public double indicarValorPorPagar(Vehiculo vehiculo, Calendar fechaSalida) throws VigilanteException {
+		Parqueo parqueo = consultarParqueo(vehiculo);
+		Ingreso ingreso = registroService.consultarIngreso(vehiculo);
 		
-		return null;
+		int horasParqueo = calcularHorasParqueo(ingreso.getFecha(), fechaSalida);
+		
+		return calcularValorPorPagar(horasParqueo, parqueo);
+	}
+	
+	private double calcularValorPorPagar(int horasParqueo, Parqueo parqueo) {
+		double valorPorPagar = 0;
+		
+		if(horasParqueo >= 9){
+			int dias = ((int)horasParqueo / 24);
+			valorPorPagar += parqueo.getValorDia() * dias;
+			valorPorPagar += parqueo.getValorHora() * (horasParqueo - (dias * 24));
+		}
+		else{
+			valorPorPagar += parqueo.getValorHora() * ((int)horasParqueo);
+		}
+		
+		valorPorPagar += parqueo.getValorAdicional();
+
+		return valorPorPagar;
+	}
+
+	private int calcularHorasParqueo(Calendar fechaIngreso, Calendar fechaSalida) {
+		long diferenciaFechas = fechaSalida.getTimeInMillis() - fechaIngreso.getTimeInMillis();
+		double horasTranscurridas = diferenciaFechas / 3600000.0;
+		
+		boolean isFraccion = (horasTranscurridas - ((int) horasTranscurridas)) > 0;
+		
+		return (int)horasTranscurridas + (isFraccion ? 1 : 0);
+	}
+
+	private Parqueo consultarParqueo(Vehiculo vehiculo) throws VigilanteException {
+		List<Parqueo> parqueos = parqueoService.listarParqueos();
+
+		for(Parqueo parqueo: parqueos){
+			if(parqueo.getVehiculo().getPlaca().equalsIgnoreCase(vehiculo.getPlaca())){
+				return parqueo;
+			}
+		}
+
+		throw new VigilanteException(VigilanteException.VEHICULO_NO_ESTA_EN_EL_PARQUEADERO);
 	}
 
 }
