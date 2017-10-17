@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.persistencia.builder.ParqueoBuilder;
 import co.com.ceiba.persistencia.entidad.ParqueoEntity;
+import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 import co.com.ceiba.persistencia.repositorio.jpa.RepositorioVehiculoJPA;
 import co.com.ceiba.repositorio.RepositorioParqueo;
 import co.com.ceiba.repositorio.RepositorioVehiculo;
@@ -16,6 +17,7 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 
 	private static final String PLACA = "placa";
 	private static final String PARQUEO_FIND_BY_PLACA = "Parqueo.findByPlaca";
+	private static final String PARQUEO_LIST = "Parqueo.list";
 	
 	private EntityManager entityManager;
 	private RepositorioVehiculoJPA repositorioVehiculoJPA;
@@ -47,8 +49,33 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 
 	@Override
 	public void agregar(Parqueo parqueo) {
-		
-		entityManager.persist(ParqueoBuilder.convertirAEntity(parqueo));
+
+		ParqueoEntity parqueoEntity = buildParqueoEntity(parqueo);
+
+		entityManager.persist(parqueoEntity);
+	}
+
+	private ParqueoEntity buildParqueoEntity(Parqueo parqueo) {
+
+		VehiculoEntity vehiculoEntity = this.repositorioVehiculoJPA.obtenerVehiculoEntityPorPlaca(parqueo.getVehiculo().getPlaca());
+
+		ParqueoEntity parqueoEntity = new ParqueoEntity();
+		parqueoEntity.setVehiculo(vehiculoEntity);
+		parqueoEntity.setValorAdicional(parqueo.getValorAdicional());
+		parqueoEntity.setValorDia(parqueo.getValorDia());
+		parqueoEntity.setValorHora(parqueo.getValorHora());
+
+		return parqueoEntity;
+	}
+
+	@Override
+	public List<Parqueo> obtenerParqueos() {
+
+		Query query = entityManager.createNamedQuery(PARQUEO_LIST);
+
+		List resultList = query.getResultList();
+
+		return !resultList.isEmpty() ? (List<Parqueo>) resultList : null;
 	}
 
 }

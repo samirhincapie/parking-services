@@ -1,5 +1,7 @@
 package co.com.ceiba.repositorio;
 
+import java.util.List;
+
 import co.com.ceiba.model.Parqueo;
 
 public interface RepositorioParqueo {
@@ -16,5 +18,12 @@ public interface RepositorioParqueo {
 	 * @param parqueo
 	 */
 	void agregar(Parqueo parqueo);
+
+	/**
+	 * Permite obtener una lista de parqueos
+	 * @param placa
+	 * @return
+	 */
+	List<Parqueo> obtenerParqueos();
 
 }
