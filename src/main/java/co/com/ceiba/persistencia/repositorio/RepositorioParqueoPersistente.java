@@ -7,6 +7,10 @@ import javax.persistence.Query;
 
 import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.persistencia.builder.ParqueoBuilder;
+import co.com.ceiba.persistencia.builder.ParqueoCarroBuilder;
+import co.com.ceiba.persistencia.builder.ParqueoMotoBuilder;
+import co.com.ceiba.persistencia.entidad.CarroEntity;
+import co.com.ceiba.persistencia.entidad.MotoEntity;
 import co.com.ceiba.persistencia.entidad.ParqueoEntity;
 import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 import co.com.ceiba.persistencia.repositorio.jpa.RepositorioVehiculoJPA;
@@ -30,10 +34,22 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 
 	@Override
 	public Parqueo obtenerParqueoPorPlaca(String placa) {
-
 		ParqueoEntity parqueoEntity = obtenerParqueoEntityPorPlaca(placa);
+		
+		ParqueoBuilder parqueoBuilder = obtenerInstanciaParqueoBuilder(parqueoEntity.getVehiculo());
+		
+		return parqueoBuilder.convertirADominio(parqueoEntity);
+	}
 
-		return ParqueoBuilder.convertirADominio(parqueoEntity);
+	private ParqueoBuilder obtenerInstanciaParqueoBuilder(VehiculoEntity vehiculo) {
+		if(CarroEntity.class.isInstance(vehiculo.getClass())){
+			return new ParqueoCarroBuilder();
+		}
+		else if(MotoEntity.class.isInstance(vehiculo.getClass())){
+			return new ParqueoMotoBuilder();
+		}
+		
+		return null;
 	}
 
 	@SuppressWarnings("rawtypes")

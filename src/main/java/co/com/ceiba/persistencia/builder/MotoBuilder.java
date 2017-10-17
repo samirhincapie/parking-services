@@ -7,12 +7,13 @@ import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public class MotoBuilder extends VehiculoBuilder {
 	
-	
+	@Override
 	public Vehiculo convertirADominio(VehiculoEntity vehiculoEntity) {
 		MotoEntity motoEntity = (MotoEntity) vehiculoEntity;
 		return new Moto(motoEntity.getPlaca(), motoEntity.getCilindraje());
 	}
 	
+	@Override
 	public VehiculoEntity convertirAEntity(Vehiculo vehiculo) {
 		Moto moto = (Moto)vehiculo;
 		MotoEntity motoEntity = new MotoEntity();
