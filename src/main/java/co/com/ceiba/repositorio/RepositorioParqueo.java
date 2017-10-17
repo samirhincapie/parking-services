@@ -5,15 +5,15 @@ import co.com.ceiba.model.Parqueo;
 public interface RepositorioParqueo {
 
 	/**
-	 * Permite obtener un parqueo dado una placa
-	 * @param isbn
+	 * Permite obtener un parqueo dada una placa
+	 * @param placa
 	 * @return
 	 */
 	Parqueo obtenerParqueoPorPlaca(String placa);
 	
 	/**
 	 * Permite agregar un parqueo al repositorio de parqueos
-	 * @param prestamo
+	 * @param parqueo
 	 */
 	void agregar(Parqueo parqueo);
 
