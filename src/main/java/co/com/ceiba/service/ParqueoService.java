@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import co.com.ceiba.model.Carro;
 import co.com.ceiba.model.Parqueo;
-import co.com.ceiba.model.ParqueoCarro;
 import co.com.ceiba.persistencia.sistema.SistemaDePersistencia;
 import co.com.ceiba.repositorio.RepositorioParqueo;
 

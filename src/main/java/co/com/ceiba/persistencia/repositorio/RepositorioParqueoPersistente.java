@@ -22,6 +22,7 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 	private static final String PLACA = "placa";
 	private static final String PARQUEO_FIND_BY_PLACA = "Parqueo.findByPlaca";
 	private static final String PARQUEO_LIST = "Parqueo.list";
+	private static final String PARQUEO_REMOVE_BY_PLACA = "Parqueo.removeByPlaca";
 	
 	private EntityManager entityManager;
 	private RepositorioVehiculoJPA repositorioVehiculoJPA;
@@ -96,7 +97,9 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 
 	@Override
 	public void liberar(String placa) {
+		Query query = entityManager.createNamedQuery(this.PARQUEO_REMOVE_BY_PLACA);
 		
+		query.executeUpdate();
 		
 	}
 
