@@ -18,6 +18,12 @@ public interface RepositorioParqueo {
 	 * @param parqueo
 	 */
 	void agregar(Parqueo parqueo);
+	
+	/**
+	 * Permite liberar un parqueo del repositorio de parqueos
+	 * @param parqueo
+	 */
+	void liberar(String placa);
 
 	/**
 	 * Permite obtener una lista de parqueos

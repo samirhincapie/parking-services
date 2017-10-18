@@ -122,7 +122,7 @@ public class Vigilante {
 	}
 
 	public Salida registrarSalida(Salida salida) {
-		this.parqueoService.LiberarParqueo(salida.getVehiculo().getPlaca());
+		this.parqueoService.liberarParqueo(salida.getVehiculo().getPlaca());
 		return registroService.agrega(salida);
 	}
 

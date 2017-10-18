@@ -1,6 +1,5 @@
 package co.com.ceiba.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -8,20 +7,33 @@ import org.springframework.stereotype.Component;
 import co.com.ceiba.model.Carro;
 import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.model.ParqueoCarro;
+import co.com.ceiba.persistencia.sistema.SistemaDePersistencia;
+import co.com.ceiba.repositorio.RepositorioParqueo;
 
 @Component
 public class ParqueoService {
-
-	public List<Parqueo> listarParqueos() {
-		return new ArrayList<Parqueo>();
-	}
-
-	public void LiberarParqueo(String placa) {
+	
+	private SistemaDePersistencia sistemaDePersistencia;
+	
+	private RepositorioParqueo repositorioParqueo;
+	
+	public ParqueoService(SistemaDePersistencia sistemaDePersistencia){
+		this.sistemaDePersistencia = sistemaDePersistencia;
+		
+		this.repositorioParqueo = this.sistemaDePersistencia.obtenerRepositorioParqueo();
 		
 	}
 
+	public List<Parqueo> listarParqueos() {
+		return this.repositorioParqueo.obtenerParqueos();
+	}
+
+	public void liberarParqueo(String placa) {
+		this.repositorioParqueo.liberar(placa);
+	}
+
 	public Parqueo consultarParqueo(String placa) {
-		return new ParqueoCarro(new Carro(""), 0, 0);
+		return this.repositorioParqueo.obtenerParqueoPorPlaca(placa);
 	}
 
 }

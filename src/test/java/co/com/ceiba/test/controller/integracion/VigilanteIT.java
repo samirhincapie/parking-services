@@ -80,7 +80,7 @@ public class VigilanteIT {
 		this.sistemaPersistencia.iniciar();
 		
 		this.mockParqueoService = new ParqueoService();
-		this.mockRegistroService = new RegistroService();
+		this.mockRegistroService = new RegistroService(this.sistemaPersistencia);
 
 		this.vigilante = new Vigilante(mockParqueoService, mockRegistroService);
 	}

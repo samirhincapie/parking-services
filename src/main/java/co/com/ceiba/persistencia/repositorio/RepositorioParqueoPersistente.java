@@ -94,4 +94,10 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 		return !resultList.isEmpty() ? (List<Parqueo>) resultList : null;
 	}
 
+	@Override
+	public void liberar(String placa) {
+		
+		
+	}
+
 }
