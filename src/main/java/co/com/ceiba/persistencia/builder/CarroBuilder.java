@@ -7,7 +7,7 @@ import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public class CarroBuilder extends VehiculoBuilder {
 	
-	protected CarroBuilder(){}
+	public CarroBuilder(){}
 	
 	@Override
 	public Vehiculo convertirADominio(VehiculoEntity vehiculoEntity) {
