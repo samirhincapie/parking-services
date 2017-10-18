@@ -21,7 +21,7 @@ public class RegistroController {
 	@Autowired
 	private Vigilante vigilante;
 	
-	@PostMapping("/registros")
+	@PostMapping("/ingresos")
 	public ResponseEntity<Void> agregar(@RequestBody Ingreso nuevoIngreso) throws Exception {
 		Ingreso ingreso = vigilante.registrarIngreso(nuevoIngreso);
 

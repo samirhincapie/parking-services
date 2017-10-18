@@ -6,8 +6,10 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.Type;
 import java.util.Calendar;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +27,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.Gson;
+
 import co.com.ceiba.controller.RegistroController;
 import co.com.ceiba.controller.Vigilante;
+import co.com.ceiba.model.Carro;
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.service.RegistroService;
 
@@ -49,7 +55,7 @@ public class RegistroControllerTest {
 
 
 	@Test
-	public void vigilanteIndicaValorPorPagarIT() throws Exception {
+	public void vigilanteIndicaValorPorPagarTest() throws Exception {
 		//Arrange
 		String esperado = String.valueOf(5000d);
 		String mockFechaLong = String.valueOf(1000l);
@@ -75,10 +81,12 @@ public class RegistroControllerTest {
 	@Test
 	public void Test1() throws Exception {
 		//Arrange
-		String exampleIngresoJson = "{'fecha':1000, 'vehiculo':{'placa':'AAA000'}}";
+		Ingreso mockIngreso = new Ingreso(Calendar.getInstance(), new Carro("AAA000"));
 		
-		Ingreso mockIngreso = mock(Ingreso.class);
-
+		Gson gson = new Gson();
+		Type tipo = new TypeToken<Ingreso>() {}.getType();
+		String exampleIngresoJson = gson.toJson(mockIngreso, tipo);
+		
 		when(this.vigilante.registrarIngreso(mockIngreso))
 		.thenReturn(mockIngreso);
 
@@ -87,11 +95,13 @@ public class RegistroControllerTest {
 				.accept(MediaType.APPLICATION_JSON).content(exampleIngresoJson)
 				.contentType(MediaType.APPLICATION_JSON);
 
+		
 		//Act
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
 		MockHttpServletResponse response = result.getResponse();
 
+		
 		//Assert
 		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 
