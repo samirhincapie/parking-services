@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import co.com.ceiba.model.Ingreso;
-import co.com.ceiba.model.Moto;
+import co.com.ceiba.model.VigilanteException;
 
 @RestController
 public class RegistroController {
@@ -34,8 +34,10 @@ public class RegistroController {
 		return ResponseEntity.created(location).build();
 	}
 
-	@GetMapping("/registros/{placa}/")
-	public Ingreso retrieveCoursesForStudent(@PathVariable String placa) {
-		return new Ingreso(Calendar.getInstance(), new Moto(placa, 125));
+	@GetMapping("/pagos/{placa}/fecha/{fecha}")
+	public double indicarValorPorPagar(@PathVariable String placa, @PathVariable long fecha) throws VigilanteException {
+		Calendar fechaSalida = Calendar.getInstance();
+		fechaSalida.setTimeInMillis(fecha);
+		return this.vigilante.indicarValorPorPagar(placa, fechaSalida);
 	}
 }

@@ -267,7 +267,7 @@ public class VigilanteTest {
 		when(mockParqueoService.consultarParqueo(anyString()))
 		.thenReturn(mockParqueo);
 		
-		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		when(mockRegistroService.consultarIngreso(anyString()))
 		.thenReturn(mockIngreso);
 		
 		when(mockIngreso.getFecha())
@@ -293,7 +293,7 @@ public class VigilanteTest {
 		
 		
 		//Act
-		valorPorPagar = vigilante.indicarValorPorPagar(mockCarro, mockFechaSalida);
+		valorPorPagar = vigilante.indicarValorPorPagar(anyString(), mockFechaSalida);
 		
 		
 		//Assert
@@ -321,7 +321,7 @@ public class VigilanteTest {
 		when(mockParqueoService.consultarParqueo(anyString()))
 		.thenReturn(mockParqueo);
 		
-		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		when(mockRegistroService.consultarIngreso(anyString()))
 		.thenReturn(mockIngreso);
 		
 		when(mockIngreso.getFecha())
@@ -347,7 +347,7 @@ public class VigilanteTest {
 		
 		
 		//Act
-		valorPorPagar = vigilante.indicarValorPorPagar(mockCarro, mockFechaSalida);
+		valorPorPagar = vigilante.indicarValorPorPagar(anyString(), mockFechaSalida);
 		
 		
 		//Assert
@@ -375,7 +375,7 @@ public class VigilanteTest {
 		when(mockParqueoService.consultarParqueo(anyString()))
 		.thenReturn(mockParqueo);
 		
-		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		when(mockRegistroService.consultarIngreso(anyString()))
 		.thenReturn(mockIngreso);
 		
 		when(mockIngreso.getFecha())
@@ -401,7 +401,7 @@ public class VigilanteTest {
 		
 		
 		//Act
-		valorPorPagar = vigilante.indicarValorPorPagar(mockCarro, mockFechaSalida);
+		valorPorPagar = vigilante.indicarValorPorPagar(anyString(), mockFechaSalida);
 		
 		
 		//Assert
@@ -429,7 +429,7 @@ public class VigilanteTest {
 		when(mockParqueoService.consultarParqueo(anyString()))
 		.thenReturn(mockParqueo);
 		
-		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		when(mockRegistroService.consultarIngreso(anyString()))
 		.thenReturn(mockIngreso);
 		
 		when(mockIngreso.getFecha())
@@ -458,7 +458,7 @@ public class VigilanteTest {
 		
 		
 		//Act
-		valorPorPagar = vigilante.indicarValorPorPagar(mockMoto, mockFechaSalida);
+		valorPorPagar = vigilante.indicarValorPorPagar(anyString(), mockFechaSalida);
 		
 		
 		//Assert
@@ -486,7 +486,7 @@ public class VigilanteTest {
 		when(mockParqueoService.consultarParqueo(anyString()))
 		.thenReturn(mockParqueo);
 		
-		when(mockRegistroService.consultarIngreso(any(Carro.class)))
+		when(mockRegistroService.consultarIngreso(anyString()))
 		.thenReturn(mockIngreso);
 		
 		when(mockIngreso.getFecha())
@@ -515,7 +515,7 @@ public class VigilanteTest {
 		
 		
 		//Act
-		valorPorPagar = vigilante.indicarValorPorPagar(mockMoto, mockFechaSalida);
+		valorPorPagar = vigilante.indicarValorPorPagar(anyString(), mockFechaSalida);
 		
 		
 		//Assert

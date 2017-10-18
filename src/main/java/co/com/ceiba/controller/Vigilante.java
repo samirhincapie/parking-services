@@ -120,9 +120,9 @@ public class Vigilante {
 		return registroService.agrega(salida);
 	}
 
-	public double indicarValorPorPagar(Vehiculo vehiculo, Calendar fechaSalida) throws VigilanteException {
-		Parqueo parqueo = parqueoService.consultarParqueo(vehiculo.getPlaca());
-		Ingreso ingreso = registroService.consultarIngreso(vehiculo);
+	public double indicarValorPorPagar(String placa, Calendar fechaSalida) throws VigilanteException {
+		Parqueo parqueo = parqueoService.consultarParqueo(placa);
+		Ingreso ingreso = registroService.consultarIngreso(placa);
 		
 		int horasParqueo = calcularHorasParqueo(ingreso.getFecha(), fechaSalida);
 		

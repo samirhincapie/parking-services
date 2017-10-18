@@ -42,7 +42,7 @@ public class RegistroControllerTest {
 	Ingreso mockIngreso = new Ingreso(fecha, new Moto("AAA00A", 125));
 
 	
-	String exampleIngresoJson = "{\"fecha\":"+fecha.getTimeInMillis()+",\"vehiculo\":{\"placa\":\"AAA00A\",\"cilindraje\":125}}";
+	String exampleIngresoJson = "{'fecha':"+fecha.getTimeInMillis()+",'vehiculo':{'placa':'AAA00A','cilindraje':125}}";
 
 	@Test
 	public void retrieveDetailsForCourse() throws Exception {
@@ -58,11 +58,9 @@ public class RegistroControllerTest {
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
 		System.out.println("INI::< " + result.getResponse()+">::FIN");
-		String expected = "{id:0,fecha:"+fecha.getTimeInMillis()+",vehiculo:{placa:AAA00A,cilindraje:125}}";
+		String expected = "{'id':0,'fecha':"+fecha.getTimeInMillis()+",'vehiculo':{'placa':'AAA00A','cilindraje':125}}";
 		System.out.println("INI::< "+ expected+ " >::< " + result.getResponse().getContentAsString()+">::FIN");
 		
-		//{"id":"Course1","name":"Spring","description":"10 Steps, 25 Examples and 10K Students","steps":["Learn Maven","Import Project","First Example","Second Example"]}
-
 		JSONAssert.assertEquals(expected, result.getResponse()
 				.getContentAsString(), false);
 	}
