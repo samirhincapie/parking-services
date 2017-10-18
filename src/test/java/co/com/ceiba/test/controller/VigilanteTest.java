@@ -282,6 +282,9 @@ public class VigilanteTest {
 		when(mockParqueo.getValorHora())
 		.thenReturn(1000d);
 		
+		when(mockParqueo.getValorAdicional())
+		.thenReturn(0d);
+		
 		when(mockCarro.getPlaca())
 		.thenReturn("AAA000");
 				
@@ -332,6 +335,9 @@ public class VigilanteTest {
 		
 		when(mockParqueo.getValorHora())
 		.thenReturn(1000d);
+		
+		when(mockParqueo.getValorAdicional())
+		.thenReturn(0d);
 		
 		when(mockCarro.getPlaca())
 		.thenReturn("AAA000");
@@ -384,6 +390,9 @@ public class VigilanteTest {
 		when(mockParqueo.getValorHora())
 		.thenReturn(1000d);
 		
+		when(mockParqueo.getValorAdicional())
+		.thenReturn(0d);
+		
 		when(mockCarro.getPlaca())
 		.thenReturn("AAA000");
 				
@@ -434,6 +443,9 @@ public class VigilanteTest {
 		
 		when(mockParqueo.getValorHora())
 		.thenReturn(500d);
+		
+		when(mockParqueo.getValorAdicional())
+		.thenReturn(0d);
 		
 		when(mockMoto.getPlaca())
 		.thenReturn("AAA00A");

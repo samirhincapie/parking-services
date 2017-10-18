@@ -7,7 +7,7 @@ public abstract class ParqueoBuilder {
 	
 	protected ParqueoBuilder() {}
 	
-	public abstract Parqueo convertirADominio(ParqueoEntity libroEntity);
+	public abstract Parqueo convertirADominio(ParqueoEntity parqueoEntity);
 	
 	public abstract ParqueoEntity convertirAEntity(Parqueo parqueo);
 }

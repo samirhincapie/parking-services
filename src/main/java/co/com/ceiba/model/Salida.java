@@ -15,7 +15,7 @@ public class Salida {
 		return this.vehiculo;
 	}
 	
-	public Calendar getFechaSalida(){
+	public Calendar getFecha(){
 		return this.fecha;
 	}
 }

@@ -7,13 +7,13 @@ public class Ingreso {
 	private Calendar fecha;
 	private Vehiculo vehiculo;
 
-	public Ingreso(Calendar fecha, Carro carro) {
+	public Ingreso(Calendar fecha, Vehiculo vehiculo) {
 		this.fecha = fecha;
-		this.vehiculo = carro;
+		this.vehiculo = vehiculo;
 	}
 	
-	public Ingreso(int id, Calendar fecha, Carro carro){
-		this(fecha, carro);
+	public Ingreso(int id, Calendar fecha, Vehiculo vehiculo){
+		this(fecha, vehiculo);
 		this.id = id;
 	}
 

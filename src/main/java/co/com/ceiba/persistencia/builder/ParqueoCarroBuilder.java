@@ -21,9 +21,9 @@ public class ParqueoCarroBuilder extends ParqueoBuilder {
 
 	@Override
 	public ParqueoEntity convertirAEntity(Parqueo parqueo) {
-		CarroBuilder vehiculoBuilder = new CarroBuilder();
+		CarroBuilder carroBuilder = new CarroBuilder();
 		VehiculoEntity vehiculoEntity = new VehiculoEntity();
-		vehiculoEntity = vehiculoBuilder.convertirAEntity(parqueo.getVehiculo());
+		vehiculoEntity = carroBuilder.convertirAEntity(parqueo.getVehiculo());
 		
 		ParqueoEntity parqueoEntity = new ParqueoEntity();
 		parqueoEntity.setVehiculo(vehiculoEntity);
