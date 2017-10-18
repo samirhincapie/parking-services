@@ -18,7 +18,7 @@ import co.com.ceiba.repositorio.RepositorioVehiculo;
 public class RepositorioVehiculoPersistente implements RepositorioVehiculo, RepositorioVehiculoJPA {
 
 	private static final String PLACA = "placa";
-	private static final String VEHICULO_FIND_BY_PLACA = "Ingreso.findByPlaca";
+	private static final String VEHICULO_FIND_BY_PLACA = "Vehiculo.findByPlaca";
 	
 	private EntityManager entityManager;
 

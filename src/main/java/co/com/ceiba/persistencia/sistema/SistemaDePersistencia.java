@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import co.com.ceiba.persistencia.conexion.ConexionJPA;
 import co.com.ceiba.persistencia.repositorio.RepositorioParqueoPersistente;
 import co.com.ceiba.persistencia.repositorio.RepositorioRegistroPersistente;
+import co.com.ceiba.persistencia.repositorio.RepositorioVehiculoPersistente;
 import co.com.ceiba.repositorio.RepositorioParqueo;
 import co.com.ceiba.repositorio.RepositorioRegistro;
 import co.com.ceiba.repositorio.RepositorioVehiculo;

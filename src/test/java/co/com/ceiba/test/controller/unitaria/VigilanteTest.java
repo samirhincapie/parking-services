@@ -1,4 +1,4 @@
-package co.com.ceiba.test.controller;
+package co.com.ceiba.test.controller.unitaria;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
