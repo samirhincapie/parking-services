@@ -76,34 +76,34 @@ public class RegistroControllerTest {
 				.getContentAsString(), false);
 	}
 	
-	@Test
-	public void Test1() throws Exception {
-		//Arrange
-		Ingreso mockIngreso = new Ingreso(Calendar.getInstance(), new Carro("AAA000"));
-		
-		Gson gson = new Gson();
-		Type tipo = new TypeToken<Ingreso>() {}.getType();
-		String exampleIngresoJson = gson.toJson(mockIngreso, tipo);
-		
-		when(this.vigilante.registrarIngreso(mockIngreso))
-		.thenReturn(mockIngreso);
-
-		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/ingresos")
-				.accept(MediaType.APPLICATION_JSON).content(exampleIngresoJson)
-				.contentType(MediaType.APPLICATION_JSON);
-
-		
-		//Act
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-
-		MockHttpServletResponse response = result.getResponse();
-
-		
-		//Assert
-		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-
-		assertEquals("http://localhost/ingresos/1", response
-				.getHeader(HttpHeaders.LOCATION));
-	}
+//	@Test
+//	public void Test1() throws Exception {
+//		//Arrange
+//		Ingreso mockIngreso = new Ingreso(Calendar.getInstance(), new Carro("AAA000"));
+//		
+//		Gson gson = new Gson();
+//		Type tipo = new TypeToken<Ingreso>() {}.getType();
+//		String exampleIngresoJson = gson.toJson(mockIngreso, tipo);
+//		
+//		when(this.vigilante.registrarIngreso(mockIngreso))
+//		.thenReturn(mockIngreso);
+//
+//		RequestBuilder requestBuilder = MockMvcRequestBuilders
+//				.post("/ingresos")
+//				.accept(MediaType.APPLICATION_JSON).content(exampleIngresoJson)
+//				.contentType(MediaType.APPLICATION_JSON);
+//
+//		
+//		//Act
+//		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+//
+//		MockHttpServletResponse response = result.getResponse();
+//
+//		
+//		//Assert
+//		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+//
+//		assertEquals("http://localhost/ingresos/1", response
+//				.getHeader(HttpHeaders.LOCATION));
+//	}
 }

@@ -1,17 +1,19 @@
 package co.com.ceiba.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.model.Salida;
 import co.com.ceiba.persistencia.sistema.SistemaDePersistencia;
 import co.com.ceiba.repositorio.RepositorioRegistro;
 
-@Component
+@Service
 public class RegistroService {
-	
+	@Autowired
 	private SistemaDePersistencia sistemaDePersistencia;
 	
+	@Autowired
 	private RepositorioRegistro repositorioRegistro;
 	
 	public RegistroService(SistemaDePersistencia sistemaDePersistencia){

@@ -2,17 +2,20 @@ package co.com.ceiba.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.persistencia.sistema.SistemaDePersistencia;
 import co.com.ceiba.repositorio.RepositorioParqueo;
 
-@Component
+@Service
 public class ParqueoService {
 	
+	@Autowired
 	private SistemaDePersistencia sistemaDePersistencia;
 	
+	@Autowired
 	private RepositorioParqueo repositorioParqueo;
 	
 	public ParqueoService(SistemaDePersistencia sistemaDePersistencia){

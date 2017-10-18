@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.com.ceiba.model.Carro;
@@ -24,8 +25,14 @@ import co.com.ceiba.service.RegistroService;
 public class Vigilante {	
 	private int limiteParqueoCarro;
 	private int limiteParqueoMoto;
+	
+	@Autowired
 	private ParqueoService parqueoService;
+	
+	@Autowired
 	private RegistroService registroService;
+
+	@Autowired
 	private List<IRegla> reglas;
 	
 	protected Vigilante(){

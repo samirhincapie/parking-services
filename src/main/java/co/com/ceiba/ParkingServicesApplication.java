@@ -13,6 +13,6 @@ import org.springframework.context.ApplicationContext;
 public class ParkingServicesApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(ParkingServicesApplication.class, args);
+		SpringApplication.run(ParkingServicesApplication.class, args);
 	}
 }
