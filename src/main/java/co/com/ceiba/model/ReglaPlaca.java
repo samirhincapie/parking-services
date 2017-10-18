@@ -20,19 +20,11 @@ public class ReglaPlaca implements IRegla {
 	
 	public boolean isValido(Ingreso ingreso) {
 		List<ReglaPlacaDia> reglasPlacaDiaAplicables = ObtenerReglasPlacaDiaAplicables(ingreso.getVehiculo().getPlaca());
-		System.out.println(ingreso.getFecha());
-		System.out.println(ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
-		System.out.println(Calendar.DAY_OF_WEEK);
-		System.out.println(Calendar.MONDAY);
-		System.out.println(Calendar.SUNDAY);
 		return verificarDiaValido(reglasPlacaDiaAplicables, ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
 	}
 
 	private boolean verificarDiaValido(List<ReglaPlacaDia> reglasPlacaDiaAplicables, int diaIngreso) {
 		if(reglasPlacaDiaAplicables.size() > 0){
-			for(ReglaPlacaDia reglaPlacaDia : this.reglasPlacaDia){
-				System.out.println(reglaPlacaDia.getPlaca() + ": " + reglaPlacaDia.getDia() + " : " + diaIngreso);
-			};
 			for(ReglaPlacaDia reglaPlacaDia : reglasPlacaDiaAplicables){
 				if(reglaPlacaDia.getDia() == diaIngreso){
 					return true;

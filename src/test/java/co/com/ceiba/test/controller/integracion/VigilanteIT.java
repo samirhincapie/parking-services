@@ -99,10 +99,10 @@ public class VigilanteIT {
 		
 		Calendar mockFecha = new CalendarTestDataBuilder()
 				.withYear(2017)
-				.withMonth(10)
+				.withMonth(9)
 				.withDay(16)
 				.withHour(0)
-				.withMinute(0)
+				.withMinute(1)
 				.Build();
 		
 		Ingreso mockIngreso = new Ingreso(mockFecha, mockCarro);
