@@ -1,46 +1,60 @@
 package co.com.ceiba.model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class ReglaPlaca implements IRegla {
-	private Map<String, Integer> reglasPlacaDia;
+	private List<ReglaPlacaDia> reglasPlacaDia;
 	
 	public ReglaPlaca (){
-		reglasPlacaDia = new HashMap<String, Integer>();
+		this.reglasPlacaDia = new ArrayList<>();
 	}
 	
-	public Map<String, Integer> getReglasPlacaDia(){
+	public List<ReglaPlacaDia> getReglasPlacaDia(){
 		return this.reglasPlacaDia;
 	}
 	
 	public boolean isValido(Ingreso ingreso) {
-		Map<String, Integer> reglasPlacaDiaAplicables = ObtenerReglasPlacaDiaAplicables(ingreso.getVehiculo().getPlaca());
-		
+		List<ReglaPlacaDia> reglasPlacaDiaAplicables = ObtenerReglasPlacaDiaAplicables(ingreso.getVehiculo().getPlaca());
+		System.out.println(ingreso.getFecha());
+		System.out.println(ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
+		System.out.println(Calendar.DAY_OF_WEEK);
+		System.out.println(Calendar.MONDAY);
+		System.out.println(Calendar.SUNDAY);
 		return verificarDiaValido(reglasPlacaDiaAplicables, ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
 	}
 
-	private boolean verificarDiaValido(Map<String, Integer> reglasPlacaDiaAplicables, int diaIngreso) {
+	private boolean verificarDiaValido(List<ReglaPlacaDia> reglasPlacaDiaAplicables, int diaIngreso) {
 		if(reglasPlacaDiaAplicables.size() > 0){
-			
-			return reglasPlacaDiaAplicables.containsValue(diaIngreso);
+			for(ReglaPlacaDia reglaPlacaDia : this.reglasPlacaDia){
+				System.out.println(reglaPlacaDia.getPlaca() + ": " + reglaPlacaDia.getDia() + " : " + diaIngreso);
+			};
+			for(ReglaPlacaDia reglaPlacaDia : reglasPlacaDiaAplicables){
+				if(reglaPlacaDia.getDia() == diaIngreso){
+					return true;
+				}
+			};
+
+			return false;
 		}
 		
 		return true;
 	}
 
-	private Map<String, Integer> ObtenerReglasPlacaDiaAplicables(String placaIngreso) {
-		Map<String, Integer> reglasPlacaDiaAplicables = new HashMap<String, Integer>();
+	private List<ReglaPlacaDia> ObtenerReglasPlacaDiaAplicables(String placaIngreso) {
+		List<ReglaPlacaDia> reglasPlacaDiaAplicables = new ArrayList<>();
 		
-		reglasPlacaDia.forEach((placaRegla, diaRegla) -> {
-			if(isReglaAplicablePlaca(placaRegla, placaIngreso)){
-				reglasPlacaDiaAplicables.put(placaRegla, diaRegla);
+		for(ReglaPlacaDia reglaPlacaDia : this.reglasPlacaDia){
+			if(isReglaAplicablePlaca(reglaPlacaDia.getPlaca(), placaIngreso)){
+				reglasPlacaDiaAplicables.add(new ReglaPlacaDia(reglaPlacaDia.getPlaca(), reglaPlacaDia.getDia()));
 			}
-		});
+		}
 		
-		return null;
+		return reglasPlacaDiaAplicables;
 	}
 
 	private boolean isReglaAplicablePlaca(String placaRegla, String placaIngreso) {
