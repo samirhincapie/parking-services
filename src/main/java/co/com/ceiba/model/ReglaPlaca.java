@@ -22,17 +22,15 @@ public class ReglaPlaca implements IRegla {
 	}
 
 	private boolean verificarDiaValido(List<ReglaPlacaDia> reglasPlacaDiaAplicables, int diaIngreso) {
-		if(reglasPlacaDiaAplicables.isEmpty()){
+		if(!reglasPlacaDiaAplicables.isEmpty()){
 			for(ReglaPlacaDia reglaPlacaDia : reglasPlacaDiaAplicables){
 				if(reglaPlacaDia.getDia() == diaIngreso){
 					return true;
 				}
 			}
-
-			return false;
 		}
 		
-		return true;
+		return false;
 	}
 
 	private List<ReglaPlacaDia> obtenerReglasPlacaDiaAplicables(String placaIngreso) {

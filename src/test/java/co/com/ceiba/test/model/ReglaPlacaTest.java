@@ -1,5 +1,6 @@
 package co.com.ceiba.test.model;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -18,12 +19,14 @@ import co.com.ceiba.model.ReglaPlacaDia;
 import co.com.ceiba.model.Vehiculo;
 
 public class ReglaPlacaTest {
-	private static final String PLACA = "AAA000";
+	private static final String PLACA_APLICA_REGLA = "AAA000";
+	private static final String PLACA_NO_APLICA_REGLA = "BBB000";
 	private static final int DIA = Calendar.MONDAY;
 	
 	private List<ReglaPlacaDia> mockReglasPlacaDia;
 	
 	private Ingreso mockIngreso;
+	private Vehiculo mockVehiculo;
 	
 	@Before
 	public void setup(){
@@ -33,15 +36,12 @@ public class ReglaPlacaTest {
 		this.mockReglasPlacaDia.add(mockReglaPlacaDia);
 		
 		mockIngreso = mock(Ingreso.class);
+		mockVehiculo = mock(Vehiculo.class);
 		
-		Vehiculo mockVehiculo = mock(Vehiculo.class);
 		Calendar mockFecha = mock(Calendar.class);
 		
 		when(mockIngreso.getVehiculo())
 		.thenReturn(mockVehiculo);
-		
-		when(mockVehiculo.getPlaca())
-		.thenReturn(PLACA);
 		
 		when(mockFecha.get(anyInt()))
 		.thenReturn(DIA);
@@ -53,15 +53,18 @@ public class ReglaPlacaTest {
 		.thenReturn(DIA);
 		
 		when(mockReglaPlacaDia.getPlaca())
-		.thenReturn(PLACA);
+		.thenReturn(PLACA_APLICA_REGLA);
 	}
 
 	@Test
-	public void reglaValidaIngreso(){
+	public void validaPlacaIngresoAplicaReglaTest(){
 		//Arrange
 		ReglaPlaca reglaPlaca = new ReglaPlaca();
 		mockReglasPlacaDia.forEach((regla -> {reglaPlaca.getReglasPlacaDia().add(regla);}));
-				
+		
+		when(mockVehiculo.getPlaca())
+		.thenReturn(PLACA_APLICA_REGLA);
+		
 		
 		//Act
 		boolean resultado = reglaPlaca.isValido(this.mockIngreso);
@@ -69,5 +72,23 @@ public class ReglaPlacaTest {
 		
 		//Assert
 		assertTrue(resultado);
+	}
+
+	@Test
+	public void validaPlacaIngresoNoAplicaReglaTest(){
+		//Arrange
+		ReglaPlaca reglaPlaca = new ReglaPlaca();
+		mockReglasPlacaDia.forEach((regla -> {reglaPlaca.getReglasPlacaDia().add(regla);}));
+
+		when(mockVehiculo.getPlaca())
+		.thenReturn(PLACA_NO_APLICA_REGLA);
+		
+		
+		//Act
+		boolean resultado = reglaPlaca.isValido(this.mockIngreso);
+		
+		
+		//Assert
+		assertFalse(resultado);
 	}
 }
