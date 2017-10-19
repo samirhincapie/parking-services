@@ -2,6 +2,7 @@ package co.com.ceiba.test.persistencia.builder;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.model.Vehiculo;
 import co.com.ceiba.persistencia.builder.ParqueoCarroBuilder;
 import co.com.ceiba.persistencia.entidad.ParqueoEntity;
+import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public class ParqueoCarroBuilderTest {
 	private static final int ID = 1;
@@ -26,6 +28,20 @@ public class ParqueoCarroBuilderTest {
 	public void setup(){
 		this.mockParqueo = mock(Parqueo.class);
 		this.mockParqueoEntity = mock(ParqueoEntity.class);
+		
+		VehiculoEntity mockVehiculoEntity = mock(VehiculoEntity.class);
+				
+		when(this.mockParqueoEntity.getVehiculo())
+		.thenReturn(mockVehiculoEntity);
+		
+		when(this.mockParqueoEntity.getValorAdicional())
+		.thenReturn(VALOR_ADICIONAL);
+		
+		when(this.mockParqueoEntity.getValorDia())
+		.thenReturn(VALOR_DIA);
+		
+		when(this.mockParqueoEntity.getValorHora())
+		.thenReturn(VALOR_HORA);
 	}
 
 	@Test
