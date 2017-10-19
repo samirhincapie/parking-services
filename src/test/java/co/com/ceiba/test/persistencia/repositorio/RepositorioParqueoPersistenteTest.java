@@ -87,7 +87,7 @@ public class RepositorioParqueoPersistenteTest {
 	}
 	
 	@Test
-	public void test(){
+	public void liberarParqueoTest(){
 		//Arrange
 		RepositorioParqueoPersistente repositorioParqueoPersistente = new RepositorioParqueoPersistente(this.mockEntityManager, this.mockRepositorioVehiculo);
 		
