@@ -33,4 +33,8 @@ public class VehiculoEntity {
 	public void setPlaca(String placa) {
 		this.placa = placa;
 	}
+	
+	public Class<?> obtenerClase(){
+		return this.getClass();
+	}
 }

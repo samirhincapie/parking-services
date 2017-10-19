@@ -1,20 +1,25 @@
 package co.com.ceiba.test.persistencia.repositorio;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.model.Vehiculo;
+import co.com.ceiba.persistencia.entidad.CarroEntity;
 import co.com.ceiba.persistencia.entidad.ParqueoEntity;
 import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 import co.com.ceiba.persistencia.repositorio.RepositorioParqueoPersistente;
@@ -98,5 +103,60 @@ public class RepositorioParqueoPersistenteTest {
 				
 		//Assert
 		//Si no lanza una excepción pasa la prueba
+	}
+	
+	@Test
+	public void obtenerParqueosTest(){
+		//Arrange
+		RepositorioParqueoPersistente repositorioParqueoPersistente = new RepositorioParqueoPersistente(this.mockEntityManager, this.mockRepositorioVehiculo);
+		Query mockQuery = mock(Query.class);
+		List<Parqueo> parqueosEsperados = new ArrayList<>();
+		parqueosEsperados.add(this.mockParqueo);
+		
+		when(this.mockEntityManager.createNamedQuery(anyString()))
+		.thenReturn(mockQuery);
+		
+		when(mockQuery.getResultList())
+		.thenReturn(parqueosEsperados);
+		
+		
+		//Act
+		List<Parqueo> parqueos = repositorioParqueoPersistente.obtenerParqueos();
+		
+				
+		//Assert
+		assertEquals(parqueosEsperados, parqueos);
+	}
+	
+	@Test
+	public void obtenerParqueoPorPlacaTest() throws RepositorioPersistenteException{
+		//Arrange
+//		RepositorioParqueoPersistente repositorioParqueoPersistente = new RepositorioParqueoPersistente(this.mockEntityManager, this.mockRepositorioVehiculo);
+//		Query mockQuery = mock(Query.class);
+//		ParqueoEntity mockParqueoEntity = mock(ParqueoEntity.class);
+//		CarroEntity mockCarroEntity = mock(CarroEntity.class);
+//		List<ParqueoEntity> parqueosEsperados = new ArrayList<>();
+		
+//		parqueosEsperados.add(mockParqueoEntity);
+		
+//		when(this.mockEntityManager.createNamedQuery(anyString()))
+//		.thenReturn(mockQuery);
+		
+//		when(mockQuery.getResultList())
+//		.thenReturn(parqueosEsperados);
+		
+//		when(mockQuery.setParameter(anyString(), anyString()))
+//		.thenReturn(mockQuery);
+		
+//		when(mockParqueoEntity.getVehiculo())
+//		.thenReturn(mockCarroEntity);
+				
+		
+		//Act
+//		Parqueo parqueo = repositorioParqueoPersistente.obtenerParqueoPorPlaca(PLACA);
+		
+				
+		//Assert
+//		assertEquals(this.mockParqueo, parqueo);
 	}
 }
