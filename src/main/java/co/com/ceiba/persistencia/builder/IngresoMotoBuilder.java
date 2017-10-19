@@ -3,10 +3,9 @@ package co.com.ceiba.persistencia.builder;
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.model.Moto;
 import co.com.ceiba.persistencia.entidad.IngresoEntity;
-import co.com.ceiba.persistencia.entidad.MotoEntity;
 import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
-public class IngresoMotoBuilder extends IngresoBuilder {
+public class IngresoMotoBuilder implements IIngresoBuilder {
 	
 	public IngresoMotoBuilder() {
 		//Crea instancia
@@ -15,8 +14,7 @@ public class IngresoMotoBuilder extends IngresoBuilder {
 	@Override
 	public Ingreso convertirADominio(IngresoEntity ingresoEntity) {
 		MotoBuilder motoBuilder = new MotoBuilder();
-		VehiculoEntity vehiculoEntity = ingresoEntity.getVehiculo();
-		Moto moto = motoBuilder.convertirADominio(vehiculoEntity);
+		Moto moto = motoBuilder.convertirADominio(ingresoEntity.getVehiculo());
 		return new Ingreso(ingresoEntity.getFecha(), moto);
 	}
 

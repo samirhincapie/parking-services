@@ -2,9 +2,7 @@ package co.com.ceiba.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class ReglaPlaca implements IRegla {
@@ -19,17 +17,17 @@ public class ReglaPlaca implements IRegla {
 	}
 	
 	public boolean isValido(Ingreso ingreso) {
-		List<ReglaPlacaDia> reglasPlacaDiaAplicables = ObtenerReglasPlacaDiaAplicables(ingreso.getVehiculo().getPlaca());
+		List<ReglaPlacaDia> reglasPlacaDiaAplicables = obtenerReglasPlacaDiaAplicables(ingreso.getVehiculo().getPlaca());
 		return verificarDiaValido(reglasPlacaDiaAplicables, ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
 	}
 
 	private boolean verificarDiaValido(List<ReglaPlacaDia> reglasPlacaDiaAplicables, int diaIngreso) {
-		if(reglasPlacaDiaAplicables.size() > 0){
+		if(reglasPlacaDiaAplicables.isEmpty()){
 			for(ReglaPlacaDia reglaPlacaDia : reglasPlacaDiaAplicables){
 				if(reglaPlacaDia.getDia() == diaIngreso){
 					return true;
 				}
-			};
+			}
 
 			return false;
 		}
@@ -37,7 +35,7 @@ public class ReglaPlaca implements IRegla {
 		return true;
 	}
 
-	private List<ReglaPlacaDia> ObtenerReglasPlacaDiaAplicables(String placaIngreso) {
+	private List<ReglaPlacaDia> obtenerReglasPlacaDiaAplicables(String placaIngreso) {
 		List<ReglaPlacaDia> reglasPlacaDiaAplicables = new ArrayList<>();
 		
 		for(ReglaPlacaDia reglaPlacaDia : this.reglasPlacaDia){

@@ -7,7 +7,7 @@ import javax.persistence.Query;
 
 import co.com.ceiba.model.Ingreso;
 import co.com.ceiba.model.Salida;
-import co.com.ceiba.persistencia.builder.IngresoBuilder;
+import co.com.ceiba.persistencia.builder.IIngresoBuilder;
 import co.com.ceiba.persistencia.builder.IngresoCarroBuilder;
 import co.com.ceiba.persistencia.builder.IngresoMotoBuilder;
 import co.com.ceiba.persistencia.entidad.CarroEntity;
@@ -37,12 +37,12 @@ public class RepositorioRegistroPersistente implements RepositorioRegistro {
 	public Ingreso obtenerIngresoPorPlaca(String placa) {
 		IngresoEntity ingresoEntity = obtenerIngresoEntityPorPlaca(placa);
 		
-		IngresoBuilder ingresoBuilder = obtenerInstanciaIngresoBuilder(ingresoEntity.getVehiculo());
+		IIngresoBuilder ingresoBuilder = obtenerInstanciaIngresoBuilder(ingresoEntity.getVehiculo());
 		
 		return ingresoBuilder.convertirADominio(ingresoEntity);
 	}
 
-	private IngresoBuilder obtenerInstanciaIngresoBuilder(VehiculoEntity vehiculoEntity) {
+	private IIngresoBuilder obtenerInstanciaIngresoBuilder(VehiculoEntity vehiculoEntity) {
 		if(CarroEntity.class.isInstance(vehiculoEntity.getClass())){
 			return new IngresoCarroBuilder();
 		}

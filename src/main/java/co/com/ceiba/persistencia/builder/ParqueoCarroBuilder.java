@@ -5,9 +5,8 @@ import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.model.ParqueoCarro;
 import co.com.ceiba.persistencia.entidad.CarroEntity;
 import co.com.ceiba.persistencia.entidad.ParqueoEntity;
-import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
-public class ParqueoCarroBuilder extends ParqueoBuilder {
+public class ParqueoCarroBuilder implements IParqueoBuilder {
 	
 	public ParqueoCarroBuilder() {
 		//Crea la instancia
@@ -24,11 +23,9 @@ public class ParqueoCarroBuilder extends ParqueoBuilder {
 	@Override
 	public ParqueoEntity convertirAEntity(Parqueo parqueo) {
 		CarroBuilder carroBuilder = new CarroBuilder();
-		VehiculoEntity vehiculoEntity = new VehiculoEntity();
-		vehiculoEntity = carroBuilder.convertirAEntity(parqueo.getVehiculo());
 		
 		ParqueoEntity parqueoEntity = new ParqueoEntity();
-		parqueoEntity.setVehiculo(vehiculoEntity);
+		parqueoEntity.setVehiculo(carroBuilder.convertirAEntity(parqueo.getVehiculo()));
 		parqueoEntity.setValorAdicional(parqueo.getValorAdicional());
 		parqueoEntity.setValorDia(parqueo.getValorDia());
 		parqueoEntity.setValorHora(parqueo.getValorHora());

@@ -22,7 +22,7 @@ public class RegistroController {
 	private Vigilante vigilante;
 	
 	@PostMapping("/ingresos")
-	public ResponseEntity<Void> agregar(@RequestBody Ingreso nuevoIngreso) throws Exception {
+	public ResponseEntity<Void> agregar(@RequestBody Ingreso nuevoIngreso) throws VigilanteException {
 		Ingreso ingreso = vigilante.registrarIngreso(nuevoIngreso);
 
 		if (ingreso == null)

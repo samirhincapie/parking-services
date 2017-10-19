@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 public class ConexionJPA {
 	
 	private static final String PARKING_SERVICES_PU_TEST = "parking-services-pu-test";
-	private static EntityManagerFactory entityManagerFactory;
+	private EntityManagerFactory entityManagerFactory;
 
 	public ConexionJPA() {
 		entityManagerFactory = Persistence.createEntityManagerFactory(PARKING_SERVICES_PU_TEST);

@@ -8,7 +8,7 @@ import co.com.ceiba.model.Moto;
 import co.com.ceiba.model.Vehiculo;
 import co.com.ceiba.persistencia.builder.CarroBuilder;
 import co.com.ceiba.persistencia.builder.MotoBuilder;
-import co.com.ceiba.persistencia.builder.VehiculoBuilder;
+import co.com.ceiba.persistencia.builder.IVehiculoBuilder;
 import co.com.ceiba.persistencia.entidad.CarroEntity;
 import co.com.ceiba.persistencia.entidad.MotoEntity;
 import co.com.ceiba.persistencia.entidad.VehiculoEntity;
@@ -38,11 +38,11 @@ public class RepositorioVehiculoPersistente implements RepositorioVehiculo, Repo
 	@Override
 	public Vehiculo obtenerVehiculoPorPlaca(String placa) {
 		VehiculoEntity vehiculoEntity = obtenerVehiculoEntityPorPlaca(placa);
-		VehiculoBuilder vehiculoBuilder = obtenerInstanciaVehiculoBuilder(vehiculoEntity);
+		IVehiculoBuilder vehiculoBuilder = obtenerInstanciaVehiculoBuilder(vehiculoEntity);
 		return vehiculoBuilder.convertirADominio(vehiculoEntity);
 	}
 
-	private VehiculoBuilder obtenerInstanciaVehiculoBuilder(VehiculoEntity vehiculoEntity) {
+	private IVehiculoBuilder obtenerInstanciaVehiculoBuilder(VehiculoEntity vehiculoEntity) {
 		if(CarroEntity.class.isInstance(vehiculoEntity.getClass())){
 			return new CarroBuilder();
 		}
@@ -55,11 +55,11 @@ public class RepositorioVehiculoPersistente implements RepositorioVehiculo, Repo
 
 	@Override
 	public void agregar(Vehiculo vehiculo) {
-		VehiculoBuilder vehiculoBuilder = obtenerInstanciaVehiculo(vehiculo);
+		IVehiculoBuilder vehiculoBuilder = obtenerInstanciaVehiculo(vehiculo);
 		entityManager.persist(vehiculoBuilder.convertirAEntity(vehiculo));		
 	}
 
-	private VehiculoBuilder obtenerInstanciaVehiculo(Vehiculo vehiculo) {
+	private IVehiculoBuilder obtenerInstanciaVehiculo(Vehiculo vehiculo) {
 		if(Carro.class.isInstance(vehiculo.getClass())){
 			return new CarroBuilder();
 		}

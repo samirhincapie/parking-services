@@ -116,8 +116,16 @@ public class Vigilante {
 		throw new VigilanteException(mensaje);
 	}
 
-	private int calcularLimiteParqueo(Vehiculo vehiculo) {		
-		return isMoto(vehiculo) ? this.limiteParqueoMoto : (isCarro(vehiculo) ? this.limiteParqueoCarro : 0);
+	private int calcularLimiteParqueo(Vehiculo vehiculo) {	
+		if(isMoto(vehiculo)){
+			return this.limiteParqueoMoto;
+		}
+		else if(isCarro(vehiculo)){
+			return this.limiteParqueoCarro;
+		}
+		else{
+			return 0;
+		}		
 	}
 
 	private boolean isCarro(Vehiculo vehiculo) {
@@ -146,12 +154,12 @@ public class Vigilante {
 		double valorPorPagar = 0;
 		
 		if(horasParqueo >= 9){
-			int dias = ((int)horasParqueo / 24);
+			int dias = horasParqueo / 24;
 			valorPorPagar += parqueo.getValorDia() * dias;
 			valorPorPagar += parqueo.getValorHora() * (horasParqueo - (dias * 24));
 		}
 		else{
-			valorPorPagar += parqueo.getValorHora() * ((int)horasParqueo);
+			valorPorPagar += parqueo.getValorHora() * horasParqueo;
 		}
 		
 		valorPorPagar += parqueo.getValorAdicional();
@@ -165,7 +173,12 @@ public class Vigilante {
 		
 		boolean isFraccion = (horasTranscurridas - ((int) horasTranscurridas)) > 0;
 		
-		return (int)horasTranscurridas + (isFraccion ? 1 : 0);
+		if(isFraccion){
+			return (int)horasTranscurridas + 1;
+		}
+		else {
+			return (int)horasTranscurridas;
+		}
 	}
 
 }

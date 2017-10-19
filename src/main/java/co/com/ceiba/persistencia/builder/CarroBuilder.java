@@ -5,7 +5,7 @@ import co.com.ceiba.model.Vehiculo;
 import co.com.ceiba.persistencia.entidad.CarroEntity;
 import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
-public class CarroBuilder extends VehiculoBuilder {
+public class CarroBuilder implements IVehiculoBuilder {
 	
 	public CarroBuilder(){
 		//Crea la instancia
