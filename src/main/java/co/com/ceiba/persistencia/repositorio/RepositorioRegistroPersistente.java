@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import co.com.ceiba.model.Ingreso;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.model.Salida;
 import co.com.ceiba.persistencia.builder.IIngresoBuilder;
 import co.com.ceiba.persistencia.builder.IngresoCarroBuilder;
@@ -34,7 +35,7 @@ public class RepositorioRegistroPersistente implements RepositorioRegistro {
 	}
 
 	@Override
-	public Ingreso obtenerIngresoPorPlaca(String placa) {
+	public Ingreso obtenerIngresoPorPlaca(String placa) throws RepositorioPersistenteException {
 		IngresoEntity ingresoEntity = obtenerIngresoEntityPorPlaca(placa);
 		
 		IIngresoBuilder ingresoBuilder = obtenerInstanciaIngresoBuilder(ingresoEntity.getVehiculo());
@@ -42,7 +43,7 @@ public class RepositorioRegistroPersistente implements RepositorioRegistro {
 		return ingresoBuilder.convertirADominio(ingresoEntity);
 	}
 
-	private IIngresoBuilder obtenerInstanciaIngresoBuilder(VehiculoEntity vehiculoEntity) {
+	private IIngresoBuilder obtenerInstanciaIngresoBuilder(VehiculoEntity vehiculoEntity) throws RepositorioPersistenteException {
 		if(CarroEntity.class.isInstance(vehiculoEntity.getClass())){
 			return new IngresoCarroBuilder();
 		}
@@ -50,7 +51,7 @@ public class RepositorioRegistroPersistente implements RepositorioRegistro {
 			return new IngresoMotoBuilder();
 		}
 		
-		return null;
+		throw new RepositorioPersistenteException(RepositorioPersistenteException.VEHICULO_ENTITY_DESCONOCIDO);
 	}
 
 	@SuppressWarnings("rawtypes")

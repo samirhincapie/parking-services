@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.persistencia.builder.IParqueoBuilder;
 import co.com.ceiba.persistencia.builder.ParqueoCarroBuilder;
 import co.com.ceiba.persistencia.builder.ParqueoMotoBuilder;
@@ -34,7 +35,7 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 	}
 
 	@Override
-	public Parqueo obtenerParqueoPorPlaca(String placa) {
+	public Parqueo obtenerParqueoPorPlaca(String placa) throws RepositorioPersistenteException {
 		ParqueoEntity parqueoEntity = obtenerParqueoEntityPorPlaca(placa);
 		
 		IParqueoBuilder parqueoBuilder = obtenerInstanciaParqueoBuilder(parqueoEntity.getVehiculo());
@@ -42,15 +43,15 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 		return parqueoBuilder.convertirADominio(parqueoEntity);
 	}
 
-	private IParqueoBuilder obtenerInstanciaParqueoBuilder(VehiculoEntity vehiculo) {
-		if(CarroEntity.class.isInstance(vehiculo.getClass())){
+	private IParqueoBuilder obtenerInstanciaParqueoBuilder(VehiculoEntity vehiculoEntity) throws RepositorioPersistenteException {
+		if(CarroEntity.class.isInstance(vehiculoEntity.getClass())){
 			return new ParqueoCarroBuilder();
 		}
-		else if(MotoEntity.class.isInstance(vehiculo.getClass())){
+		else if(MotoEntity.class.isInstance(vehiculoEntity.getClass())){
 			return new ParqueoMotoBuilder();
 		}
 		
-		return null;
+		throw new RepositorioPersistenteException(RepositorioPersistenteException.VEHICULO_ENTITY_DESCONOCIDO);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -61,7 +62,7 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 
 		List resultList = query.getResultList();
 
-		return !resultList.isEmpty() ? (ParqueoEntity) resultList.get(0) : null;
+		return !resultList.isEmpty() ? (ParqueoEntity) resultList.get(0) : new ParqueoEntity();
 	}
 
 	@Override
@@ -90,14 +91,14 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 
 		Query query = entityManager.createNamedQuery(PARQUEO_LIST);
 
-		List resultList = query.getResultList();
+		List<?> resultList = query.getResultList();
 
 		return !resultList.isEmpty() ? (List<Parqueo>) resultList : null;
 	}
 
 	@Override
 	public void liberar(String placa) {
-		Query query = entityManager.createNamedQuery(this.PARQUEO_REMOVE_BY_PLACA);
+		Query query = entityManager.createNamedQuery(PARQUEO_REMOVE_BY_PLACA);
 		
 		query.executeUpdate();
 		

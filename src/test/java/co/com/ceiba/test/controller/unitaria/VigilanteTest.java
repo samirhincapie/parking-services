@@ -26,6 +26,7 @@ import co.com.ceiba.model.ParqueoCarro;
 import co.com.ceiba.model.ParqueoMoto;
 import co.com.ceiba.model.ReglaPlaca;
 import co.com.ceiba.model.ReglaTipoVehiculo;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.model.Salida;
 import co.com.ceiba.model.VigilanteException;
 import co.com.ceiba.service.ParqueoService;
@@ -58,7 +59,7 @@ public class VigilanteTest {
 	}
 
 	@Test
-	public void VigilanteRegistraIngresoCarroTest() throws VigilanteException{
+	public void VigilanteRegistraIngresoCarroTest() throws VigilanteException, RepositorioPersistenteException{
 		//Arrange
 		Ingreso mockIngreso = mock(Ingreso.class);
 		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
@@ -83,7 +84,7 @@ public class VigilanteTest {
 	}
 
 	@Test
-	public void VigilanteRegistraIngresoMotoTest() throws VigilanteException{
+	public void VigilanteRegistraIngresoMotoTest() throws VigilanteException, RepositorioPersistenteException{
 		//Arrange
 		Ingreso mockIngreso = mock(Ingreso.class);
 		List<Parqueo> parqueos = mock((new ArrayList<Parqueo>()).getClass());
@@ -168,7 +169,7 @@ public class VigilanteTest {
 	}
 
 	@Test
-	public void TipoVehiculoNoPermitidoTest() {
+	public void TipoVehiculoNoPermitidoTest() throws RepositorioPersistenteException {
 		//Arrange
 		mockReglas = new ArrayList<IRegla>();
 		mockIRegla = mock(ReglaTipoVehiculo.class);
@@ -194,7 +195,7 @@ public class VigilanteTest {
 	}
 
 	@Test
-	public void VigilanteRegistraIngresoPlacaValidaTest() throws VigilanteException{
+	public void VigilanteRegistraIngresoPlacaValidaTest() throws VigilanteException, RepositorioPersistenteException{
 		//Arrange
 		Ingreso mockIngreso = mock(Ingreso.class);
 		List<Parqueo> mockParqueos = mock((new ArrayList<Parqueo>()).getClass());
@@ -221,7 +222,7 @@ public class VigilanteTest {
 	}
 
 	@Test
-	public void PlacaEmpiezaANoPuedeIngresarNoEsDiaHabilTest(){
+	public void PlacaEmpiezaANoPuedeIngresarNoEsDiaHabilTest() throws RepositorioPersistenteException{
 		//Arrange
 		mockReglas = new ArrayList<IRegla>();
 		mockIRegla = mock(ReglaPlaca.class);
@@ -247,7 +248,7 @@ public class VigilanteTest {
 	}
 	
 	@Test
-	public void VigilanteIndicaValorPorPagarPorHoraFraccionCarroTest() throws VigilanteException{
+	public void VigilanteIndicaValorPorPagarPorHoraFraccionCarroTest() throws VigilanteException, RepositorioPersistenteException{
 		//Arrange
 		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
 				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
@@ -301,7 +302,7 @@ public class VigilanteTest {
 	}
 	
 	@Test
-	public void VigilanteIndicaValorPorPagarPorHoraCarroTest() throws VigilanteException{
+	public void VigilanteIndicaValorPorPagarPorHoraCarroTest() throws VigilanteException, RepositorioPersistenteException{
 		//Arrange
 		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
 				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
@@ -355,7 +356,7 @@ public class VigilanteTest {
 	}
 	
 	@Test
-	public void VigilanteIndicaValorPorPagarPorDiaCarroTest() throws VigilanteException{
+	public void VigilanteIndicaValorPorPagarPorDiaCarroTest() throws VigilanteException, RepositorioPersistenteException{
 		//Arrange
 		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
 				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
@@ -409,7 +410,7 @@ public class VigilanteTest {
 	}
 	
 	@Test
-	public void VigilanteIndicaValorPorPagarPorHoraMotoCilindrajeMenorTest() throws VigilanteException{
+	public void VigilanteIndicaValorPorPagarPorHoraMotoCilindrajeMenorTest() throws VigilanteException, RepositorioPersistenteException{
 		//Arrange
 		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
 				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();
@@ -466,7 +467,7 @@ public class VigilanteTest {
 	}
 	
 	@Test
-	public void VigilanteIndicaValorPorPagarPorHoraMotoCilindrajeMayorTest() throws VigilanteException{
+	public void VigilanteIndicaValorPorPagarPorHoraMotoCilindrajeMayorTest() throws VigilanteException, RepositorioPersistenteException{
 		//Arrange
 		Calendar mockFechaIngreso = new CalendarTestDataBuilder().withYear(2017)
 				.withMonth(0).withDay(1).withHour(0).withMinute(0).Build();

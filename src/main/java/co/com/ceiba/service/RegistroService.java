@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.com.ceiba.model.Ingreso;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.model.Salida;
 import co.com.ceiba.persistencia.sistema.SistemaDePersistencia;
 import co.com.ceiba.repositorio.RepositorioRegistro;
@@ -23,7 +24,7 @@ public class RegistroService {
 		
 	}
 
-	public Ingreso agrega(Ingreso nuevoIngreso) {
+	public Ingreso agrega(Ingreso nuevoIngreso) throws RepositorioPersistenteException {
 		this.repositorioRegistro.agregar(nuevoIngreso);
 		return this.repositorioRegistro.obtenerIngresoPorPlaca(nuevoIngreso.getVehiculo().getPlaca());
 	}
@@ -33,7 +34,7 @@ public class RegistroService {
 		return nuevaSalida;
 	}
 
-	public Ingreso consultarIngreso(String placa) {
+	public Ingreso consultarIngreso(String placa) throws RepositorioPersistenteException {
 		return this.repositorioRegistro.obtenerIngresoPorPlaca(placa);
 	}
 

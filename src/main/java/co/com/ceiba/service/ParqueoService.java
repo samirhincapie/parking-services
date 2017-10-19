@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.persistencia.sistema.SistemaDePersistencia;
 import co.com.ceiba.repositorio.RepositorioParqueo;
 
@@ -33,7 +34,7 @@ public class ParqueoService {
 		this.repositorioParqueo.liberar(placa);
 	}
 
-	public Parqueo consultarParqueo(String placa) {
+	public Parqueo consultarParqueo(String placa) throws RepositorioPersistenteException {
 		return this.repositorioParqueo.obtenerParqueoPorPlaca(placa);
 	}
 

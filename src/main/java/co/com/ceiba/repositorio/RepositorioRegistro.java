@@ -1,6 +1,7 @@
 package co.com.ceiba.repositorio;
 
 import co.com.ceiba.model.Ingreso;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.model.Salida;
 
 public interface RepositorioRegistro {
@@ -10,7 +11,7 @@ public interface RepositorioRegistro {
 	 * @param placa
 	 * @return
 	 */
-	Ingreso obtenerIngresoPorPlaca(String placa);
+	Ingreso obtenerIngresoPorPlaca(String placa) throws RepositorioPersistenteException;
 	
 	/**
 	 * Permite agregar un ingreso al repositorio de ingresos

@@ -3,6 +3,7 @@ package co.com.ceiba.repositorio;
 import java.util.List;
 
 import co.com.ceiba.model.Parqueo;
+import co.com.ceiba.model.RepositorioPersistenteException;
 
 public interface RepositorioParqueo {
 
@@ -11,7 +12,7 @@ public interface RepositorioParqueo {
 	 * @param placa
 	 * @return
 	 */
-	Parqueo obtenerParqueoPorPlaca(String placa);
+	Parqueo obtenerParqueoPorPlaca(String placa) throws RepositorioPersistenteException;
 	
 	/**
 	 * Permite agregar un parqueo al repositorio de parqueos

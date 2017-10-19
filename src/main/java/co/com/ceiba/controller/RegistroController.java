@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import co.com.ceiba.model.Ingreso;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.model.VigilanteException;
 
 @RestController
@@ -22,7 +23,7 @@ public class RegistroController {
 	private Vigilante vigilante;
 	
 	@PostMapping("/ingresos")
-	public ResponseEntity<Void> agregar(@RequestBody Ingreso nuevoIngreso) throws VigilanteException {
+	public ResponseEntity<Void> agregar(@RequestBody Ingreso nuevoIngreso) throws VigilanteException, RepositorioPersistenteException {
 		Ingreso ingreso = vigilante.registrarIngreso(nuevoIngreso);
 
 		if (ingreso == null)
@@ -35,7 +36,7 @@ public class RegistroController {
 	}
 
 	@GetMapping("/pagos/{placa}/fecha/{fecha}")
-	public double indicarValorPorPagar(@PathVariable String placa, @PathVariable long fecha) throws VigilanteException {
+	public double indicarValorPorPagar(@PathVariable String placa, @PathVariable long fecha) throws VigilanteException, RepositorioPersistenteException {
 		Calendar fechaSalida = Calendar.getInstance();
 		fechaSalida.setTimeInMillis(fecha);
 		return this.vigilante.indicarValorPorPagar(placa, fechaSalida);

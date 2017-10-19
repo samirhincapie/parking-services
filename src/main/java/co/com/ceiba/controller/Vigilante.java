@@ -15,6 +15,7 @@ import co.com.ceiba.model.Parqueo;
 import co.com.ceiba.model.ReglaPlaca;
 import co.com.ceiba.model.ReglaPlacaDia;
 import co.com.ceiba.model.ReglaTipoVehiculo;
+import co.com.ceiba.model.RepositorioPersistenteException;
 import co.com.ceiba.model.Salida;
 import co.com.ceiba.model.Vehiculo;
 import co.com.ceiba.model.VigilanteException;
@@ -73,7 +74,7 @@ public class Vigilante {
 		this.reglas.add(reglaTipoVehiculo);
 	}
 
-	public Ingreso registrarIngreso(Ingreso ingreso) throws VigilanteException {
+	public Ingreso registrarIngreso(Ingreso ingreso) throws VigilanteException, RepositorioPersistenteException {
 		verificarReglas(ingreso);
 		verificarDisponibilidad(ingreso.getVehiculo());
 		return this.registroService.agrega(ingreso);
@@ -141,7 +142,7 @@ public class Vigilante {
 		return registroService.agrega(salida);
 	}
 
-	public double indicarValorPorPagar(String placa, Calendar fechaSalida) throws VigilanteException {
+	public double indicarValorPorPagar(String placa, Calendar fechaSalida) throws VigilanteException, RepositorioPersistenteException {
 		Parqueo parqueo = this.parqueoService.consultarParqueo(placa);
 		Ingreso ingreso = this.registroService.consultarIngreso(placa);
 		
