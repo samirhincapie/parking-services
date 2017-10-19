@@ -9,8 +9,10 @@ import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public class ParqueoMotoBuilder extends ParqueoBuilder {
 	
-	public ParqueoMotoBuilder() {}
-
+	public ParqueoMotoBuilder() {
+		//Crea la instancia
+	}
+	
 	@Override
 	public Parqueo convertirADominio(ParqueoEntity parqueoEntity) {
 		MotoBuilder motoBuilder = new MotoBuilder();

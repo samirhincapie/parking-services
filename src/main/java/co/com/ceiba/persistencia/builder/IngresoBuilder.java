@@ -5,7 +5,9 @@ import co.com.ceiba.persistencia.entidad.IngresoEntity;
 
 public abstract class IngresoBuilder {
 	
-	protected IngresoBuilder() {}
+	protected IngresoBuilder() {
+		//Crea la instancia
+	}
 	
 	public abstract Ingreso convertirADominio(IngresoEntity ingresoEntity);
 	

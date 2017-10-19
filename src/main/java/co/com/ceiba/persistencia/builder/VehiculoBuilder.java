@@ -5,7 +5,9 @@ import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public abstract class VehiculoBuilder {
 	
-	protected VehiculoBuilder() {}
+	protected VehiculoBuilder() {
+		//Crea la instancia
+	}
 	
 	public abstract Vehiculo convertirADominio(VehiculoEntity vehiculoEntity);
 	

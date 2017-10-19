@@ -5,7 +5,9 @@ import co.com.ceiba.persistencia.entidad.ParqueoEntity;
 
 public abstract class ParqueoBuilder {
 	
-	protected ParqueoBuilder() {}
+	protected ParqueoBuilder() {
+		//Crea la instancia
+	}
 	
 	public abstract Parqueo convertirADominio(ParqueoEntity parqueoEntity);
 	

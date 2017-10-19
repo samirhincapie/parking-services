@@ -7,8 +7,10 @@ import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public class MotoBuilder extends VehiculoBuilder {
 
-	public MotoBuilder(){}
-	
+	public MotoBuilder(){
+		//Crea la instancia
+	}
+		
 	@Override
 	public Moto convertirADominio(VehiculoEntity vehiculoEntity) {
 		MotoEntity motoEntity = (MotoEntity) vehiculoEntity;
