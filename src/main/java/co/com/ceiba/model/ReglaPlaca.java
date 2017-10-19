@@ -7,15 +7,15 @@ import java.util.List;
 
 public class ReglaPlaca implements IRegla {
 	private List<ReglaPlacaDia> reglasPlacaDia;
-	
+
 	public ReglaPlaca (){
 		this.reglasPlacaDia = new ArrayList<>();
 	}
-	
+
 	public List<ReglaPlacaDia> getReglasPlacaDia(){
 		return this.reglasPlacaDia;
 	}
-	
+
 	public boolean isValido(Ingreso ingreso) {
 		List<ReglaPlacaDia> reglasPlacaDiaAplicables = obtenerReglasPlacaDiaAplicables(ingreso.getVehiculo().getPlaca());
 		return verificarDiaValido(reglasPlacaDiaAplicables, ingreso.getFecha().get(Calendar.DAY_OF_WEEK));
@@ -28,40 +28,42 @@ public class ReglaPlaca implements IRegla {
 					return true;
 				}
 			}
-		}
-		
-		return false;
+			
+			return false;
+		}		
+
+		return true;
 	}
 
 	private List<ReglaPlacaDia> obtenerReglasPlacaDiaAplicables(String placaIngreso) {
 		List<ReglaPlacaDia> reglasPlacaDiaAplicables = new ArrayList<>();
-		
+
 		for(ReglaPlacaDia reglaPlacaDia : this.reglasPlacaDia){
 			if(isReglaAplicablePlaca(reglaPlacaDia.getPlaca(), placaIngreso)){
 				reglasPlacaDiaAplicables.add(new ReglaPlacaDia(reglaPlacaDia.getPlaca(), reglaPlacaDia.getDia()));
 			}
 		}
-		
+
 		return reglasPlacaDiaAplicables;
 	}
 
 	private boolean isReglaAplicablePlaca(String placaRegla, String placaIngreso) {
-		
+
 		if(placaIngreso.length() == placaRegla.length()){
-			
+
 			boolean isReglaPlacaAplicable = true; 
-			
+
 			for(char caracterPlacaRegla: placaRegla.toCharArray()){
-							
+
 				isReglaPlacaAplicable = isReglaPlacaAplicable 
 						&& (isComodin(caracterPlacaRegla)
 								|| (!isComodin(caracterPlacaRegla) && isMismoCaracterMismaPocision(placaRegla.indexOf(caracterPlacaRegla), placaRegla, placaIngreso))
-							);
+								);
 			}
-			
+
 			return isReglaPlacaAplicable;
 		}
-		
+
 		return false;
 	}
 
