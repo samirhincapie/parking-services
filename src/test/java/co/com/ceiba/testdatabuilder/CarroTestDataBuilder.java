@@ -1,12 +1,16 @@
 package co.com.ceiba.testdatabuilder;
 
+import org.mockito.Mockito;
+
 import co.com.ceiba.model.Carro;
 
 public class CarroTestDataBuilder {
+	private static final String PLACA = "AAA000"; 
+	
 	private String placa; 
 	
 	public CarroTestDataBuilder(){
-		this.placa = "";
+		this.placa = PLACA;
 	}
 
 	public CarroTestDataBuilder withPlaca(String placa) {

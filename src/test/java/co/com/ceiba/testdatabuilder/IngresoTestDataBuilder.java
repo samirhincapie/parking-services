@@ -2,19 +2,25 @@ package co.com.ceiba.testdatabuilder;
 
 import java.util.Calendar;
 
+import org.mockito.Mockito;
+
 import co.com.ceiba.model.Carro;
 import co.com.ceiba.model.Ingreso;
+import co.com.ceiba.model.Vehiculo;
 
 public class IngresoTestDataBuilder {
+	private static final int ID = 0;
+	private static final Calendar FECHA = Mockito.mock(Calendar.class);
+	private static final Vehiculo VEHICULO = Mockito.mock(Carro.class);
+	
 	private int id;
 	private Calendar fecha;
-	private Carro carro;
+	private Vehiculo vehiculo;
 	
 	public IngresoTestDataBuilder(){
-		this.id = 0;
-		this.fecha = new CalendarTestDataBuilder().withYear(1900).withMonth(0).withDay(1)
-				.withHour(0).withMinute(0).Build();
-		this.carro = new CarroTestDataBuilder().withPlaca("AAA000").Build();
+		this.id = ID;
+		this.fecha = FECHA;
+		this.vehiculo = VEHICULO;
 	}
 	
 	public IngresoTestDataBuilder withId(int id){
@@ -27,12 +33,12 @@ public class IngresoTestDataBuilder {
 		return this;
 	}
 
-	public IngresoTestDataBuilder withCarro(Carro carro) {
-		this.carro = carro;
+	public IngresoTestDataBuilder withVehiculo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
 		return this;
 	}
 
 	public Ingreso Build(){
-		return new Ingreso(this.id, this.fecha, this.carro);
+		return new Ingreso(this.id, this.fecha, this.vehiculo);
 	}
 }

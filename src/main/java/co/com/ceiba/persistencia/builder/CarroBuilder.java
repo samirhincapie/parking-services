@@ -7,10 +7,12 @@ import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public class CarroBuilder extends VehiculoBuilder {
 	
-	public CarroBuilder(){}
+	public CarroBuilder(){
+		//Crea la instancia
+	}
 	
 	@Override
-	public Vehiculo convertirADominio(VehiculoEntity vehiculoEntity) {
+	public Carro convertirADominio(VehiculoEntity vehiculoEntity) {
 		return new Carro(vehiculoEntity.getPlaca());
 	}
 	

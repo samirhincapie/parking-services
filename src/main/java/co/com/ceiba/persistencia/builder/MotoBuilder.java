@@ -10,7 +10,7 @@ public class MotoBuilder extends VehiculoBuilder {
 	public MotoBuilder(){}
 	
 	@Override
-	public Vehiculo convertirADominio(VehiculoEntity vehiculoEntity) {
+	public Moto convertirADominio(VehiculoEntity vehiculoEntity) {
 		MotoEntity motoEntity = (MotoEntity) vehiculoEntity;
 		return new Moto(motoEntity.getPlaca(), motoEntity.getCilindraje());
 	}
