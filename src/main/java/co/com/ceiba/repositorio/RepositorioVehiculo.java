@@ -1,6 +1,7 @@
 package co.com.ceiba.repositorio;
 
 import co.com.ceiba.model.Vehiculo;
+import co.com.ceiba.persistencia.repositorio.jpa.RepositorioVehiculoJPA;
 
 public interface RepositorioVehiculo {
 
@@ -17,4 +18,5 @@ public interface RepositorioVehiculo {
 	 */
 	void agregar(Vehiculo vehiculo);
 
+	RepositorioVehiculoJPA getRepositorioVehiculoJPA();
 }

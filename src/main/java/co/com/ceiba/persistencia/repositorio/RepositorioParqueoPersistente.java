@@ -31,7 +31,7 @@ public class RepositorioParqueoPersistente implements RepositorioParqueo {
 	public RepositorioParqueoPersistente(EntityManager entityManager, RepositorioVehiculo repositorioVehiculo) {
 		
 		this.entityManager = entityManager;
-		this.repositorioVehiculoJPA = (RepositorioVehiculoJPA) repositorioVehiculo;
+		this.repositorioVehiculoJPA = repositorioVehiculo.getRepositorioVehiculoJPA();
 	}
 
 	@Override

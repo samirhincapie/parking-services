@@ -70,4 +70,7 @@ public class RepositorioVehiculoPersistente implements RepositorioVehiculo, Repo
 		return null;
 	}
 
+	public RepositorioVehiculoJPA getRepositorioVehiculoJPA(){
+		return (RepositorioVehiculoJPA) this;
+	}
 }
