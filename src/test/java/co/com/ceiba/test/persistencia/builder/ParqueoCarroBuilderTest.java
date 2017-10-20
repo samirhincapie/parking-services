@@ -15,7 +15,6 @@ import co.com.ceiba.persistencia.entidad.ParqueoEntity;
 import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public class ParqueoCarroBuilderTest {
-	private static final int ID = 1;
 	private static final double VALOR_ADICIONAL = 0;
 	private static final double VALOR_DIA = 8000;
 	private static final double VALOR_HORA = 1000;
@@ -30,6 +29,7 @@ public class ParqueoCarroBuilderTest {
 		this.mockParqueoEntity = mock(ParqueoEntity.class);
 		
 		VehiculoEntity mockVehiculoEntity = mock(VehiculoEntity.class);
+		Vehiculo mockVehiculo = mock(Vehiculo.class);
 				
 		when(this.mockParqueoEntity.getVehiculo())
 		.thenReturn(mockVehiculoEntity);
@@ -42,10 +42,28 @@ public class ParqueoCarroBuilderTest {
 		
 		when(this.mockParqueoEntity.getValorHora())
 		.thenReturn(VALOR_HORA);
+		
+		when(mockVehiculoEntity.getPlaca())
+		.thenReturn(PLACA);
+		
+		when(this.mockParqueo.getVehiculo())
+		.thenReturn(mockVehiculo);
+
+		when(this.mockParqueo.getValorAdicional())
+		.thenReturn(VALOR_ADICIONAL);
+
+		when(this.mockParqueo.getValorDia())
+		.thenReturn(VALOR_DIA);
+
+		when(this.mockParqueo.getValorHora())
+		.thenReturn(VALOR_HORA);
+
+		when(mockVehiculo.getPlaca())
+		.thenReturn(PLACA);
 	}
 
 	@Test
-	public void test(){
+	public void convertirParqueoEntityAParqueoTest(){
 		//Arrange
 		ParqueoCarroBuilder parqueoCarroBuilder = new ParqueoCarroBuilder();		
 		
@@ -55,9 +73,26 @@ public class ParqueoCarroBuilderTest {
 		
 		
 		//Assert
-		assertEquals(VALOR_ADICIONAL, parqueo.getValorAdicional());
-		assertEquals(VALOR_DIA, parqueo.getValorDia());
-		assertEquals(VALOR_HORA, parqueo.getValorHora());
+		assertEquals(VALOR_ADICIONAL, parqueo.getValorAdicional(), 0.0);
+		assertEquals(VALOR_DIA, parqueo.getValorDia(), 0.0);
+		assertEquals(VALOR_HORA, parqueo.getValorHora(), 0.0);
 		assertEquals(PLACA, parqueo.getVehiculo().getPlaca());
+	}
+
+	@Test
+	public void convertirParqueoAParqueoEntityTest(){
+		//Arrange
+		ParqueoCarroBuilder parqueoCarroBuilder = new ParqueoCarroBuilder();		
+		
+		
+		//Act
+		ParqueoEntity parqueoEntity = parqueoCarroBuilder.convertirAEntity(this.mockParqueo);		
+		
+		
+		//Assert
+		assertEquals(VALOR_ADICIONAL, parqueoEntity.getValorAdicional(), 0.0);
+		assertEquals(VALOR_DIA, parqueoEntity.getValorDia(), 0.0);
+		assertEquals(VALOR_HORA, parqueoEntity.getValorHora(), 0.0);
+		assertEquals(PLACA, parqueoEntity.getVehiculo().getPlaca());
 	}
 }
