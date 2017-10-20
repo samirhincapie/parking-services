@@ -9,10 +9,9 @@ import org.junit.Test;
 
 import co.com.ceiba.model.Carro;
 import co.com.ceiba.model.Parqueo;
-import co.com.ceiba.model.Vehiculo;
 import co.com.ceiba.persistencia.builder.ParqueoCarroBuilder;
+import co.com.ceiba.persistencia.entidad.CarroEntity;
 import co.com.ceiba.persistencia.entidad.ParqueoEntity;
-import co.com.ceiba.persistencia.entidad.VehiculoEntity;
 
 public class ParqueoCarroBuilderTest {
 	private static final double VALOR_ADICIONAL = 0;
@@ -28,11 +27,11 @@ public class ParqueoCarroBuilderTest {
 		this.mockParqueo = mock(Parqueo.class);
 		this.mockParqueoEntity = mock(ParqueoEntity.class);
 		
-		VehiculoEntity mockVehiculoEntity = mock(VehiculoEntity.class);
-		Vehiculo mockVehiculo = mock(Vehiculo.class);
+		CarroEntity mockCarroEntity = mock(CarroEntity.class);
+		Carro mockCarro = mock(Carro.class);
 				
 		when(this.mockParqueoEntity.getVehiculo())
-		.thenReturn(mockVehiculoEntity);
+		.thenReturn(mockCarroEntity);
 		
 		when(this.mockParqueoEntity.getValorAdicional())
 		.thenReturn(VALOR_ADICIONAL);
@@ -43,11 +42,11 @@ public class ParqueoCarroBuilderTest {
 		when(this.mockParqueoEntity.getValorHora())
 		.thenReturn(VALOR_HORA);
 		
-		when(mockVehiculoEntity.getPlaca())
+		when(mockCarroEntity.getPlaca())
 		.thenReturn(PLACA);
 		
 		when(this.mockParqueo.getVehiculo())
-		.thenReturn(mockVehiculo);
+		.thenReturn(mockCarro);
 
 		when(this.mockParqueo.getValorAdicional())
 		.thenReturn(VALOR_ADICIONAL);
@@ -58,7 +57,7 @@ public class ParqueoCarroBuilderTest {
 		when(this.mockParqueo.getValorHora())
 		.thenReturn(VALOR_HORA);
 
-		when(mockVehiculo.getPlaca())
+		when(mockCarro.getPlaca())
 		.thenReturn(PLACA);
 	}
 

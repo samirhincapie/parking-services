@@ -1,9 +1,10 @@
 package co.com.ceiba.model;
 
 public class ParqueoMoto extends Parqueo {
+	private static final double VALOR_ADICIONAL = 2000d;
 
 	public ParqueoMoto(Moto moto, double valorHora, double valorDia) {
-		super(moto, 500, 600, 2000);
+		super(moto, valorHora, valorDia, VALOR_ADICIONAL);
 	}
 	
 	public double getValorAdicional(){
