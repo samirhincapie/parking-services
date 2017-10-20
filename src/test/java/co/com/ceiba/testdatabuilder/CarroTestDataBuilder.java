@@ -1,7 +1,5 @@
 package co.com.ceiba.testdatabuilder;
 
-import org.mockito.Mockito;
-
 import co.com.ceiba.model.Carro;
 
 public class CarroTestDataBuilder {
